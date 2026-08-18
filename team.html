@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      let savedTheme = null;
+      try {
+        savedTheme = localStorage.getItem("frontier-theme");
+      } catch {}
+      const theme = param === "dark" || param === "light"
+        ? param
+        : savedTheme === "dark" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meet the multidisciplinary Frontier AI for Office Science team advancing Microsoft Copilot.">
+  <title>Team | Frontier AI for Office Science</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--cp-text);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 100;
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      transform: translateY(-180%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 4.75rem;
+      border-bottom: 1px solid var(--cp-border-strong);
+      background: var(--cp-surface);
+    }
+
+    .header-inner,
+    .section-inner,
+    .footer-inner {
+      width: min(100% - 2.5rem, 84rem);
+      margin-inline: auto;
+    }
+
+    .header-inner {
+      min-height: 4.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.65rem;
+      min-width: max-content;
+      font-size: 1.05rem;
+      font-weight: 650;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 1.1rem;
+      background: var(--cp-border-strong);
+    }
+
+    .brand-team,
+    .site-nav a {
+      color: var(--cp-text-muted);
+    }
+
+    .brand-team {
+      font-weight: 450;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.1rem, 3vw, 2.5rem);
+    }
+
+    .site-nav a {
+      position: relative;
+      padding-block: 0.35rem;
+      font-size: 0.95rem;
+      font-weight: 550;
+    }
+
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--cp-text);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 180ms ease;
+    }
+
+    .site-nav a:hover,
+    .site-nav a[aria-current="page"] {
+      color: var(--cp-text);
+    }
+
+    .site-nav a:hover::after,
+    .site-nav a[aria-current="page"]::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .theme-toggle {
+      min-height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--cp-text);
+    }
+
+    .theme-dot {
+      width: 0.85rem;
+      height: 0.85rem;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+    }
+
+    .team-hero {
+      padding-block: clamp(1.75rem, 3vw, 2.5rem);
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-surface);
+      color: var(--cp-text);
+    }
+
+    .team-hero .section-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.65fr) minmax(20rem, 1fr);
+      gap: 0 clamp(3rem, 8vw, 8rem);
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      grid-column: 1 / -1;
+      margin: 0 0 0.75rem;
+      color: var(--cp-text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 2.5rem;
+      height: 2px;
+      background: var(--cp-text);
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    figure {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: none;
+      margin-bottom: 0;
+      font-size: clamp(2.35rem, 3.3vw, 3.25rem);
+      font-weight: 600;
+      line-height: 0.98;
+    }
+
+    .hero-copy {
+      max-width: 42rem;
+      margin-bottom: 0;
+      color: var(--cp-text-muted);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+    }
+
+    .team-content {
+      padding-block: clamp(2rem, 4vw, 3.5rem);
+      border-top: 1px solid var(--cp-border);
+      background: var(--cp-surface);
+    }
+
+    .team-roster {
+      width: min(100%, 72rem);
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 3rem);
+      align-items: start;
+      margin-inline: auto;
+    }
+
+    .member-card {
+      grid-column: span 2;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .member-card:nth-child(5) {
+      grid-column: 2 / span 2;
+    }
+
+    .member-card:nth-child(6) {
+      grid-column: 4 / span 2;
+    }
+
+    .member-card:nth-child(7) {
+      grid-column: 6 / span 2;
+    }
+
+    .member-card:hover {
+      transform: none;
+    }
+
+    .member-photo {
+      width: min(100%, 9.5rem);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 50%;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .member-card:hover .member-photo {
+      border-color: var(--cp-text);
+      background: var(--cp-border);
+    }
+
+    .member-photo span {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--cp-text);
+      font-size: clamp(1.15rem, 2vw, 1.6rem);
+      font-weight: 650;
+    }
+
+    .member-details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.9rem 0.15rem 0;
+    }
+
+    .member-details h3 {
+      margin-bottom: 0.15rem;
+      font-size: 1rem;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .member-title {
+      min-height: 2.4rem;
+      margin-bottom: 0.45rem;
+      color: var(--cp-text-muted);
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .linkedin-link {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: auto;
+      padding-bottom: 0.2rem;
+      border-bottom: 1px solid var(--cp-border-strong);
+      font-size: 0.78rem;
+      font-weight: 650;
+    }
+
+    .linkedin-mark {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 0.2rem;
+      font-size: 0.7rem;
+      line-height: 1;
+    }
+
+    .linkedin-link:hover {
+      border-color: var(--cp-text);
+    }
+
+    .site-footer {
+      padding-block: 3.5rem;
+      border-top: 1px solid var(--cp-border-strong);
+      background: var(--cp-surface);
+      color: var(--cp-text);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-title {
+      margin-bottom: 0.4rem;
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      font-weight: 550;
+      line-height: 1;
+    }
+
+    .footer-copy,
+    .copyright {
+      margin-bottom: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 64rem) {
+      .team-roster {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .member-card,
+      .member-card:nth-child(5),
+      .member-card:nth-child(6),
+      .member-card:nth-child(7) {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 46rem) {
+      .header-inner,
+      .section-inner,
+      .footer-inner {
+        width: min(100% - 1.5rem, 84rem);
+      }
+
+      .brand {
+        gap: 0.45rem;
+        font-size: 0.88rem;
+      }
+
+      .team-roster {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem 1rem;
+      }
+
+      .member-card,
+      .member-card:nth-child(5),
+      .member-card:nth-child(6),
+      .member-card:nth-child(7) {
+        grid-column: span 1;
+      }
+
+      .team-hero .section-inner {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .team-hero .eyebrow,
+      .team-hero h1,
+      .team-hero .hero-copy {
+        grid-column: 1;
+      }
+
+      .member-photo {
+        width: min(100%, 8rem);
+      }
+
+      .brand-divider,
+      .brand-team,
+      .theme-label {
+        display: none;
+      }
+
+      .theme-toggle {
+        width: 2.25rem;
+        padding-inline: 0;
+        justify-content: center;
+      }
+
+      .footer-inner {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 25rem) {
+      .brand-divider,
+      .brand-team {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Frontier AI for Office Science, home">
+        <span>Microsoft</span>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <span class="brand-team">Frontier AI for Office Science</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Blog</a>
+        <a href="team.html" aria-current="page">Team</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-dot" aria-hidden="true"></span>
+          <span class="theme-label" data-theme-label>Dark</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="team-hero" aria-labelledby="team-title">
+      <div class="section-inner">
+        <p class="eyebrow">Team</p>
+        <h1 id="team-title">Meet the team.</h1>
+        <p class="hero-copy">
+          Researchers, engineers, product thinkers, and operators advancing the science behind Microsoft Copilot, from first principles to deployed systems.
+        </p>
+      </div>
+    </section>
+
+    <section class="team-content" aria-labelledby="roster-title">
+      <div class="section-inner">
+        <h2 id="roster-title" hidden>Team members</h2>
+        <div class="team-roster">
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Mukul Singh"><span>MS</span></div>
+            <div class="member-details">
+              <h3>Mukul Singh</h3>
+              <p class="member-title">Director of Science</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Mukul%20Singh%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Mukul Singh on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Devin Devlin"><span>DD</span></div>
+            <div class="member-details">
+              <h3>Devin Devlin</h3>
+              <p class="member-title">Product Manager</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Devin%20Devlin%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Devin Devlin on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Jack Williams"><span>JW</span></div>
+            <div class="member-details">
+              <h3>Jack Williams</h3>
+              <p class="member-title">Principal Researcher</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Jack%20Williams%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Jack Williams on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Kartik Fnu"><span>KF</span></div>
+            <div class="member-details">
+              <h3>Kartik Fnu</h3>
+              <p class="member-title">Applied Scientist</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Kartik%20Fnu%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Kartik Fnu on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Kartik Sharma"><span>KS</span></div>
+            <div class="member-details">
+              <h3>Kartik Sharma</h3>
+              <p class="member-title">Senior Applied Scientist</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Kartik%20Sharma%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Kartik Sharma on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Mansi Uniyal"><span>MU</span></div>
+            <div class="member-details">
+              <h3>Mansi Uniyal</h3>
+              <p class="member-title">Researcher</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Mansi%20Uniyal%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Mansi Uniyal on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-photo" role="img" aria-label="Headshot placeholder for Qi Zhang"><span>QZ</span></div>
+            <div class="member-details">
+              <h3>Qi Zhang</h3>
+              <p class="member-title">Senior Applied Scientist</p>
+              <a class="linkedin-link" href="https://www.linkedin.com/search/results/people/?keywords=Qi%20Zhang%20Microsoft" target="_blank" rel="noreferrer" aria-label="Find Qi Zhang on LinkedIn">
+                <span class="linkedin-mark" aria-hidden="true">in</span> LinkedIn
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themeToggle = document.querySelector("[data-theme-toggle]");
+    const themeLabel = document.querySelector("[data-theme-label]");
+
+    const updateThemeToggle = () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} theme`);
+      themeLabel.textContent = isDark ? "Light" : "Dark";
+    };
+
+    themeToggle.addEventListener("click", () => {
+      const nextTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      try {
+        localStorage.setItem("frontier-theme", nextTheme);
+      } catch {}
+      updateThemeToggle();
+    });
+
+    updateThemeToggle();
+  </script>
+</body>
+</html>
