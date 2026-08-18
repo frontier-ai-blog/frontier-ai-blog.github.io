@@ -4,7 +4,7 @@ Static website for the Frontier AI for Office Science team.
 
 ## Site
 
-<https://devindevlin.github.io/frontier-ai-blog/>
+<https://frontier-ai-blog.github.io/>
 
 ## Publishing articles
 
