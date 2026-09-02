@@ -921,6 +921,11 @@
     font-family: Consolas, "Courier New", Courier, monospace;
   }
 
+  .memory-article pre code {
+    display: block;
+    white-space: pre;
+  }
+
   .memory-article .rec,
   .memory-article .band-night,
   .memory-article .asm-total,
@@ -1173,6 +1178,386 @@
     color: var(--cold-deep);
   }
 
+  .memory-article .permission-map {
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .memory-article .tool-surface {
+    padding: 1rem;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-alt);
+  }
+
+  .memory-article .map-label {
+    display: block;
+    margin-bottom: 0.65rem;
+    color: var(--ink-soft);
+    font: 700 0.68rem/1.2 "Segoe UI", Aptos, Calibri, sans-serif;
+    text-transform: uppercase;
+  }
+
+  .memory-article .tool-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+
+  .memory-article .tool-row code {
+    display: block;
+    padding: 0.55rem;
+    border-color: var(--rule) !important;
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+    text-align: center;
+  }
+
+  .memory-article .map-arrow {
+    padding: 0.55rem 1rem;
+    color: var(--ink-soft);
+    font: 600 0.7rem/1.3 "Segoe UI", Aptos, Calibri, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .memory-article .policy-gate {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    border-block: 1px solid var(--cold);
+    background: var(--cold-soft);
+  }
+
+  .memory-article .policy-gate b {
+    color: var(--cold-deep);
+    font-family: Consolas, "Courier New", Courier, monospace;
+  }
+
+  .memory-article .policy-gate span {
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    text-align: right;
+  }
+
+  .memory-article .view-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .memory-article .view-card {
+    min-width: 0;
+    padding: 1rem;
+  }
+
+  .memory-article .view-card + .view-card {
+    border-left: 1px solid var(--rule);
+  }
+
+  .memory-article .view-card h4 {
+    margin: 0 0 0.75rem;
+    color: var(--ink);
+    font: 700 0.75rem/1.3 "Segoe UI", Aptos, Calibri, sans-serif;
+    text-transform: uppercase;
+  }
+
+  .memory-article .access-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 0.76rem;
+  }
+
+  .memory-article .access-row:last-child {
+    border-bottom: 0;
+  }
+
+  .memory-article .access-row code {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .memory-article .access-mode {
+    flex: none;
+    color: var(--cold-deep);
+    font-weight: 700;
+  }
+
+  .memory-article .access-row.denied {
+    color: var(--ink-soft);
+  }
+
+  .memory-article .access-row.denied code {
+    text-decoration: line-through;
+  }
+
+  .memory-article .access-row.denied .access-mode {
+    color: var(--hot-deep);
+  }
+
+  .memory-article .summary-diagram {
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--paper);
+    font-family: "Segoe UI", Aptos, Calibri, sans-serif;
+  }
+
+  .memory-article .summary-figure {
+    width: min(900px, calc(100vw - 2rem));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .memory-article .article-summary-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 3.5rem 0 1.25rem;
+    color: var(--ink-soft);
+    font: 700 0.65rem/1 "IBM Plex Mono", Consolas, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .memory-article .article-summary-divider::before,
+  .memory-article .article-summary-divider::after {
+    height: 1px;
+    flex: 1;
+    background: var(--rule);
+    content: "";
+  }
+
+  .memory-article .summary-kicker {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--ink-soft);
+    font: 700 0.58rem/1.3 "IBM Plex Mono", Consolas, monospace;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .memory-article .summary-files {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .memory-article .summary-file {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.45rem;
+    align-items: baseline;
+    color: var(--ink-soft);
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  .memory-article .summary-file b {
+    color: var(--ink);
+    font-size: 0.64rem;
+  }
+
+  .memory-article .summary-file code {
+    padding: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 0.61rem;
+    white-space: normal;
+  }
+
+  .memory-article .summary-file.org b {
+    color: var(--hot-deep);
+  }
+
+  .memory-article .summary-file.pref b {
+    color: var(--cold-deep);
+  }
+
+  .memory-article .summary-file.workflow b {
+    color: #5d4d78;
+  }
+
+  /* Article summary: hidden stack */
+  .memory-article .hidden-stack {
+    padding: 1rem 1rem 0.9rem;
+  }
+
+  .memory-article .hidden-layer {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0.8rem;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--rule);
+    border-bottom: 0;
+    color: var(--ink-soft);
+    font-size: 0.66rem;
+    line-height: 1.4;
+  }
+
+  .memory-article .hidden-layer > span {
+    text-align: center;
+  }
+
+  .memory-article .layer-agent {
+    width: 62%;
+  }
+
+  .memory-article .layer-delivery {
+    width: 70%;
+  }
+
+  .memory-article .layer-memory {
+    width: 79%;
+    border-color: var(--ink);
+  }
+
+  .memory-article .layer-consolidation {
+    width: 87%;
+  }
+
+  .memory-article .consolidation-halves {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .memory-article .consolidation-half {
+    position: relative;
+    min-width: 0;
+  }
+
+  .memory-article .consolidation-half + .consolidation-half {
+    padding-left: 0.7rem;
+    border-left: 1px dotted var(--rule);
+  }
+
+  .memory-article .consolidation-half b {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--ink);
+    font-size: 0.62rem;
+  }
+
+  .memory-article .loop-cue {
+    margin-right: 0.15rem;
+    color: var(--ink);
+    font: 700 0.85rem/1 "IBM Plex Mono", Consolas, monospace;
+  }
+
+  .memory-article .layer-policy {
+    width: 94%;
+    background: var(--paper-alt);
+  }
+
+  .memory-article .layer-sources {
+    width: 100%;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .memory-article .hidden-layer > b {
+    color: var(--ink);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+  }
+
+  .memory-article .hidden-memory-content {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.95fr) minmax(0, 1.3fr);
+    gap: 0.7rem 1rem;
+  }
+
+  .memory-article .scope-tree {
+    padding-right: 0.8rem;
+    border-right: 1px dotted var(--rule);
+  }
+
+  .memory-article .scope-tree code {
+    display: block;
+    padding: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    line-height: 1.55;
+    white-space: nowrap;
+  }
+
+  .memory-article .memory-families {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .memory-article .memory-family {
+    display: grid;
+    grid-template-columns: 6.7rem 1fr;
+    gap: 0.45rem;
+    align-items: baseline;
+    font-size: 0.63rem;
+    line-height: 1.4;
+  }
+
+  .memory-article .memory-family b {
+    color: var(--ink);
+    font-size: 0.64rem;
+  }
+
+  .memory-article .memory-family span {
+    color: var(--ink-soft);
+  }
+
+  .memory-article .memory-family.org b {
+    color: var(--hot-deep);
+  }
+
+  .memory-article .memory-family.pref b {
+    color: var(--cold-deep);
+  }
+
+  .memory-article .memory-family.workflow b {
+    color: #5d4d78;
+  }
+
+  .memory-article .memory-contract-line {
+    grid-column: 1 / -1;
+    padding-top: 0.5rem;
+    border-top: 1px dotted var(--rule);
+    color: var(--ink-soft);
+    font: 0.59rem/1.45 "IBM Plex Mono", Consolas, monospace;
+    text-align: center;
+  }
+
+  .memory-article .source-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.8rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .memory-article .source-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    white-space: nowrap;
+  }
+
+  .memory-article .source-icon svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
   .memory-article .sources li {
     border-bottom-color: var(--rule);
   }
@@ -1210,6 +1595,60 @@
     .memory-article .question-contrast {
       grid-template-columns: 1fr;
     }
+
+    .memory-article .policy-gate {
+      display: block;
+    }
+
+    .memory-article .policy-gate span {
+      display: block;
+      margin-top: 0.35rem;
+      text-align: left;
+    }
+
+    .memory-article .view-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .memory-article .view-card + .view-card {
+      border-top: 1px solid var(--rule);
+      border-left: 0;
+    }
+
+    .memory-article .hidden-memory-content {
+      grid-template-columns: 1fr;
+    }
+
+    .memory-article .scope-tree {
+      padding-right: 0;
+      padding-bottom: 0.7rem;
+      border-right: 0;
+      border-bottom: 1px dotted var(--rule);
+    }
+
+    .memory-article .hidden-layer,
+    .memory-article .layer-agent,
+    .memory-article .layer-delivery,
+    .memory-article .layer-memory,
+    .memory-article .layer-consolidation,
+    .memory-article .layer-policy,
+    .memory-article .layer-sources {
+      grid-template-columns: 1fr;
+      width: 100%;
+    }
+
+    .memory-article .consolidation-halves {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .memory-article .consolidation-half + .consolidation-half {
+      padding-top: 0.45rem;
+      padding-left: 0;
+      border-top: 1px dotted var(--rule);
+      border-left: 0;
+    }
+
   }
 </style>
 </head>
@@ -1235,7 +1674,7 @@
   <div class="hero-inner">
     <div class="hero-badge">Agent Memory Architecture</div>
     <h1>The Enterprise Memory Iceberg: What Retrieval Benchmarks Don&rsquo;t See</h1>
-    <p class="subtitle">Learnings from building the compression, governance and consolidation layers beneath agent recall.</p>
+    <p class="subtitle">What it takes to build simple, effective memory for agents.</p>
     <p class="byline"><strong>Kartik Fnu</strong> &middot; Applied Scientist II &middot; September 2026</p>
   </div>
 </header>
@@ -1247,7 +1686,7 @@
       <li><a href="#filter"><span class="ad">01</span> The hardest retrieval decisions happen during compression</a></li>
       <li><a href="#types"><span class="ad">02</span> Three memory types for the enterprise case</a></li>
       <li><a href="#schema"><span class="ad">03</span> Every memory type needs a schema</a></li>
-      <li><a href="#writing"><span class="ad">04</span> Dreaming keeps memory from becoming noise</a></li>
+      <li><a href="#writing"><span class="ad">04</span> Dreaming: Night and Day</a></li>
       <li><a href="#delivery"><span class="ad">05</span> Load by scope, retrieve by need</a></li>
       <li><a href="#search"><span class="ad">06</span> Memory narrows the query, search grounds the answer</a></li>
       <li><a href="#close"><span class="ad">07</span> Evaluate the agent, not the memory</a></li>
@@ -1365,7 +1804,7 @@
       <i><span class="sw procedure-range"></span>procedural knowledge</i>
       <i><span class="sw"></span>runtime context</i>
     </div>
-    <figcaption id="fig2-cap"><b>Figure 2 &mdash; the sourced memory vocabulary</b>Labels with direct prior use, placed by their primary role and typical useful horizon. The ranges overlap because the terms come from different research traditions and describe different dimensions. This is a map of the vocabulary, not a storage schema or a mapping into the three enterprise types below.</figcaption>
+    <figcaption id="fig2-cap"><b>Figure 2 &mdash; the sourced memory vocabulary</b>Terms overlap because they describe different dimensions. This is a vocabulary map, not a storage schema.</figcaption>
   </figure>
 
   <p>For this enterprise design, we use three durable memory types. They are not supersets of the labels above and do not need a one-to-one mapping. They identify three kinds of information that agents must learn and maintain differently.</p>
@@ -1391,7 +1830,7 @@
         <span class="triad-example"><em>Examples</em> Apply a Word style guide learned across an editing session; build meeting briefs from the latest decision log; validate reported numbers against the source system before sharing.</span>
       </div>
     </div>
-    <figcaption id="fig3-cap"><b>Figure 3 &mdash; three enterprise memory types</b>The state of the work, the shape of the result and the path used to produce it. These are the implementation categories for this design.</figcaption>
+    <figcaption id="fig3-cap"><b>Figure 3 &mdash; three enterprise memory types</b></figcaption>
   </figure>
 
   <p>Workflow memory is learned over a longer horizon than a single instruction. It comes from comparing trajectories across conversations: where the agent repeatedly takes a wrong turn, where the user redirects it, which sources resolve the task fastest, which handoffs recur and which larger goal connects otherwise separate requests. It is not a transcript of what happened. It is a compact model of how this user's work tends to progress.</p>
@@ -1508,7 +1947,7 @@
       </div>
 
     </div>
-    <figcaption id="fig4-cap"><b>Figure 4 &mdash; five records, three memory families</b>Organizational memory needs separate contracts for projects, people and tasks; preferences and workflows have different update rules again. Scope determines where a record may act. Governance fields appear only where its lifecycle requires them.</figcaption>
+    <figcaption id="fig4-cap"><b>Figure 4 &mdash; five records, three memory families</b></figcaption>
   </figure>
 
   <h3>Records for maintenance, prose for reading</h3>
@@ -1528,18 +1967,18 @@
       <div class="layer plug"><span class="lname">store</span><span class="lval">files &middot; vector index &middot; temporal graph &middot; a vendor memory service</span></div>
       <div class="layer plug"><span class="lname">sources</span><span class="lval">email &middot; chat &middot; documents &middot; calendar &middot; CRM &middot; partner agents &middot; connectors</span></div>
     </div>
-    <figcaption id="fig5-cap"><b>Figure 5 &mdash; separate the contract from the implementation</b>Sources and stores can vary; record types, scope and governance remain consistent across them.</figcaption>
+    <figcaption id="fig5-cap"><b>Figure 5 &mdash; separate the contract from the implementation</b></figcaption>
   </figure>
 </section>
 
 <section id="writing">
-  <div class="sec-head"><a class="addr-link" href="#writing"><span class="addr mono">04</span></a><h2>Dreaming keeps memory from becoming noise</h2></div>
+  <div class="sec-head"><a class="addr-link" href="#writing"><span class="addr mono">04</span></a><h2>Dreaming: Night and Day</h2></div>
 
-  <p>An agent can collect hundreds of plausible memories in a day. Most are routine activity, duplicates, automated noise or one-off behavior. Save them all and memory becomes an activity log within days: larger, less precise and less trustworthy.</p>
+  <p>An agent can collect hundreds of plausible memories in a day. Most are routine activity, duplicates, automated noise or one-off behavior. Save them all and memory becomes an activity log within days: larger, less precise and less trustworthy. Memory has a day shift and a dream shift: by day, the agent collects evidence; at night, it decides what deserves to survive.</p>
 
   <p><strong>Dreaming is the offline pass that turns observation into maintained memory.</strong> OpenAI uses the term for background synthesis; here it means comparing a window of experience, updating the typed records that already exist and discarding what should not survive. The delay is essential because hindsight separates an event from a pattern.</p>
 
-  <p>One rename belongs to a workbook. The same rename across three workbooks earns promotion to a spreadsheet preference. An explicit exception for customer forecasts then limits where it may act. <strong>Dreaming finds the pattern, widens its scope and resolves the conflict.</strong></p>
+  <p>A request to lead one deck with decisions belongs to that deck. The same choice across several reviews can become a presentation preference. Repeated requests to show a diff before rewriting can become a procedural memory. An exception for customer-facing material then limits where either may act. <strong>Dreaming finds the patterns, adjusts their scope and resolves the conflicts.</strong></p>
 
 <figure aria-labelledby="fig6-cap">
     <div class="dream">
@@ -1547,14 +1986,14 @@
       <div class="dream-band band-day">
         <div class="band-head"><span>Wednesday &middot; raw episodic trace</span><span class="t">~340 signals</span></div>
         <div class="trace">
-          <span class="sig echo"><b>09:14</b> sheet &middot; renamed col &rarr; FY26Q1</span>
+          <span class="sig echo"><b>09:14</b> deck &middot; moved decisions to slide 1</span>
           <span class="sig"><b>10:02</b> mail &middot; deck fwd &rarr; Priya, Sam</span>
-          <span class="sig echo"><b>11:15</b> chat &middot; Priya: "what's margin here"</span>
+          <span class="sig echo"><b>11:15</b> chat &middot; "lead the review with decisions"</span>
           <span class="sig"><b>11:47</b> cal &middot; declined Atlas standup</span>
-          <span class="sig echo"><b>13:22</b> sheet &middot; renamed col &rarr; FY26Q2</span>
+          <span class="sig echo"><b>13:22</b> docs &middot; accepted decision-first summary</span>
           <span class="sig"><b>14:10</b> mail &middot; "Atlas is paused for now"</span>
           <span class="sig"><b>14:38</b> docs &middot; rejected full-rewrite proposal</span>
-          <span class="sig echo"><b>15:50</b> sheet &middot; renamed col &rarr; FY26Q3</span>
+          <span class="sig"><b>15:50</b> sheet &middot; Priya added margin beside revenue</span>
           <span class="sig"><b>16:30</b> docs &middot; acme contract signed</span>
           <span class="sig">&hellip;331 more</span>
         </div>
@@ -1571,12 +2010,12 @@
 
           <div class="op">
             <span class="op-name">merge + reinforce</span>
-            <span class="op-body"><span class="was">3 renames FY26Q1/Q2/Q3</span><span class="arrow">&rarr;</span><span class="now">1 record, seen 3&times;</span> <span class="note">one convention, not three events</span></span>
+            <span class="op-body"><span class="was">3 decision-first edits</span><span class="arrow">&rarr;</span><span class="now">1 record, seen 3&times;</span> <span class="note">one preference, not three actions</span></span>
           </div>
 
           <div class="op">
             <span class="op-name">promote</span>
-            <span class="op-body"><span class="was">scope: artifact</span><span class="arrow">&rarr;</span><span class="now">app:spreadsheet</span> <span class="note">3 workbooks &mdash; not yet user-wide</span></span>
+            <span class="op-body"><span class="was">scope: artifact</span><span class="arrow">&rarr;</span><span class="now">task:quarterly-review</span> <span class="note">3 review surfaces &mdash; not user-wide</span></span>
           </div>
 
           <div class="op">
@@ -1607,17 +2046,22 @@
         <div class="diff">
           <div><span class="chg">~</span> <span class="path">projects.md</span> <span class="why">atlas: active &rarr; winding_down (history intact)</span></div>
           <div><span class="chg">~</span> <span class="path">people.md</span> <span class="why">priya: reviewer &rarr; margin reviewer</span></div>
-          <div><span class="add">+</span> <span class="path">spreadsheet/prefs.md</span> <span class="why">fiscal columns FY&lt;yy&gt;Q&lt;n&gt; &middot; seen 3&times; &middot; scope app</span></div>
+          <div><span class="add">+</span> <span class="path">reviews/prefs.md</span> <span class="why">lead with decisions &middot; seen 3&times; &middot; scope quarterly-review</span></div>
           <div><span class="chg">~</span> <span class="path">docs/workflows.md</span> <span class="why">full-rewrite path weakened &rarr; diff-first</span></div>
           <div><span class="del">&minus;</span> <span class="path">docs/artifacts/acme.md</span> <span class="why">indemnity instruction expired at signature</span></div>
         </div>
       </div>
 
     </div>
-    <figcaption id="fig6-cap"><b>Figure 6 &mdash; one night, 340 signals in, five writes out</b>Counts are illustrative &mdash; <em>measure your own</em>; the signal-to-write ratio is the first thing to instrument, because it sets both the cost and the precision of everything downstream.</figcaption>
+    <figcaption id="fig6-cap"><b>Figure 6 &mdash; one night, 340 signals in, five writes out</b>Counts are illustrative; measure the signal-to-write ratio in your own system.</figcaption>
   </figure>
 
   <h3>Filter before inference</h3>
+
+  <div class="rf">
+    <span class="who">Daydreaming</span>
+    <p><b>Observation without consolidation.</b> A model can inspect the latest raw signals while their local context is still available and flag what may matter. It does not merge evidence, infer patterns, widen scope or write durable memory; the night pass decides what survives.</p>
+  </div>
 
   <p>Most signals do not require a model decision. Duplicates, no-ops, automated messages and activity with no human decision or action can be removed deterministically. The model should see a small candidate set, not the entire day.</p>
 
@@ -1633,9 +2077,9 @@
     <thead><tr><th>Operation</th><th>What it does</th><th>From Wednesday</th></tr></thead>
     <tbody>
       <tr><td class="field">prefilter</td><td>Deterministically drop duplicates, no-ops and anything below threshold, before inference</td><td>340 raw signals reduced to ~40 candidates</td></tr>
-      <tr><td class="field">merge</td><td>Collapse repeated observations of the same thing into one record</td><td>Three column renames become one naming convention</td></tr>
+      <tr><td class="field">merge</td><td>Collapse repeated observations of the same thing into one record</td><td>Three decision-first edits become one review preference</td></tr>
       <tr><td class="field">reinforce</td><td>Increment <code>evidence</code> on a record that already exists</td><td><code>seen</code> 1 &rarr; 3</td></tr>
-      <tr><td class="field">promote</td><td>Widen <code>scope</code> when evidence spans contexts &mdash; <code>team</code> requires <code>stated</code></td><td><code>artifact</code> &rarr; <code>app:spreadsheet</code>, not yet user-wide</td></tr>
+      <tr><td class="field">promote</td><td>Widen <code>scope</code> when evidence spans contexts &mdash; <code>team</code> requires <code>stated</code></td><td><code>artifact</code> &rarr; <code>task:quarterly-review</code>, not user-wide</td></tr>
       <tr><td class="field">supersede</td><td>Replace a value and retain the prior one in the append-only log</td><td>Atlas <code>active</code> &rarr; <code>winding_down</code></td></tr>
       <tr><td class="field">resolve</td><td>Settle contradictions: <code>stated</code> outranks <code>inferred</code>, then recency, then evidence</td><td>One instruction beats twelve accepted subject lines</td></tr>
       <tr><td class="field">strengthen<br>weaken</td><td>Move workflow <code>confidence</code> as later trajectories confirm, contradict or expose friction in a path</td><td>Full-rewrite path weakened to 0.31 after a third rejection</td></tr>
@@ -1663,11 +2107,61 @@
 
   <p>A compact projection also gives caching something stable to reuse. Root memory changes rarely. Artifact memory changes with the document. The volatile tier should therefore stay the smallest.</p>
 
+  <h3>Use the tools the harness already knows</h3>
+
+  <p>Memory should look like a small filesystem, not a new tool ecosystem. Let the agent use the <code>glob</code>, <code>grep</code>, <code>read</code> and <code>write</code> tools the harness already provides. <code>memory_read</code> and <code>memory_write</code> are not two more model-visible tools; they are the policy-enforcing abstraction behind those existing read and write operations when the path points into memory.</p>
+
+  <p>A shared memory store does not imply a shared view. Every entrypoint receives its own projection of the memory tree, filtered by application, artifact, user, source permissions and policy. App A can read promoted user context and App A memory; App B remains invisible unless the task and policy explicitly require cross-application access. Parent folders are not automatically readable merely because a child is mounted.</p>
+
+  <p>The write boundary is tighter. Agents can create, update and delete memory within the scope they are operating in, but they cannot change a sibling, parent or team scope unless that capability is explicitly granted. <code>memory_write</code> enforces both the operation and its scope. Consolidation performs promotion only after checking evidence, provenance and permission inheritance. This keeps a convenient filesystem interface without turning every agent into an administrator of the entire memory store.</p>
+
+  <figure aria-labelledby="fig7-cap">
+    <div class="permission-map">
+      <div class="tool-surface">
+        <span class="map-label">Existing model-visible harness tools</span>
+        <div class="tool-row">
+          <code>glob</code>
+          <code>grep</code>
+          <code>read</code>
+          <code>write</code>
+        </div>
+      </div>
+
+      <div class="map-arrow">A path enters the memory namespace &darr;</div>
+
+      <div class="policy-gate">
+        <b>memory_read &middot; memory_write</b>
+        <span>scope &middot; source permissions &middot; create/update/delete policy</span>
+      </div>
+
+      <div class="map-arrow">The entrypoint receives a filtered projection &darr;</div>
+
+      <div class="view-grid">
+        <div class="view-card">
+          <h4>App A entrypoint</h4>
+          <div class="access-row"><code>memory/user/</code><span class="access-mode">read</span></div>
+          <div class="access-row"><code>memory/apps/app-a/</code><span class="access-mode">read + write</span></div>
+          <div class="access-row"><code>memory/artifacts/current/</code><span class="access-mode">read + write</span></div>
+          <div class="access-row denied"><code>memory/apps/app-b/</code><span class="access-mode">not visible</span></div>
+        </div>
+
+        <div class="view-card">
+          <h4>App B entrypoint</h4>
+          <div class="access-row"><code>memory/user/</code><span class="access-mode">read</span></div>
+          <div class="access-row"><code>memory/apps/app-b/</code><span class="access-mode">read + write</span></div>
+          <div class="access-row"><code>memory/artifacts/current/</code><span class="access-mode">read + write</span></div>
+          <div class="access-row"><code>memory/apps/app-a/</code><span class="access-mode">read</span></div>
+        </div>
+      </div>
+    </div>
+    <figcaption id="fig7-cap"><b>Figure 7 &mdash; one store, different entrypoint views</b></figcaption>
+  </figure>
+
   <h3>Compaction is a reload boundary</h3>
 
-  <p>Compaction summarizes a conversation, not a memory contract. It preserves the gist and drops fields such as <code>source</code>, <code>assertion</code> and <code>valid</code> because they are not narratively important. The result is a plausible sentence with no authority or end condition.</p>
+  <p>Compaction preserves enough conversational state for the session to continue; it does not preserve a memory contract. Even when a summary retains the fact itself, it may lose fields such as <code>source</code>, <code>assertion</code>, <code>scope</code> and <code>valid</code>. A plausible sentence is not a substitute for the maintained record behind it.</p>
 
-  <p>Treat compaction as a reload boundary. Exclude memory from the summary, then regenerate its prose projection from the maintained records. The required fields are reconstructed rather than trusted to survive.</p>
+  <p>In this design, the system prompt, tools prompt and memory projection form a frozen prefix when the context is built. Compaction logic can differ across harnesses. When the harness rebuilds the context, it reads the maintained memory again and injects the current projection rather than relying on memory carried through the summary.</p>
 
   <p><span class="runin">A working example</span>Claude Code loads broad instruction files at session start, loads narrower path-scoped files when matching files are accessed, and re-reads project-root instructions after compaction. The enterprise version uses different scopes, but the pattern is the same: deterministic loading for known context, progressive disclosure for the rest.</p>
 </section>
@@ -1675,11 +2169,11 @@
 <section id="search">
   <div class="sec-head"><a class="addr-link" href="#search"><span class="addr mono">06</span></a><h2>Memory narrows the query, search grounds the answer</h2></div>
 
-  <p>Search knows what the organization has. Memory knows which part of it the user probably means.</p>
+  <p><strong>Search knows what the organization has.</strong> <span class="hl-c">Memory knows which part of it the user probably means.</span></p>
 
-  <p>When a request is underspecified, memory shapes the query rather than answering it. Enterprise search already uses permissions, recency, organizational context and user activity to rank results. Memory adds the working context learned across sessions: the active project, current collaborators, open artifacts and alternatives that are no longer relevant. It turns &ldquo;the review&rdquo; into &ldquo;the FY26Q3 QBR with Priya and Sam&rdquo; &mdash; a narrower question for an already capable search system.</p>
+  <p>When a request is underspecified, <em>memory shapes the query rather than answering it.</em> Enterprise search already uses permissions, recency, organizational context and user activity to rank results. Memory adds the working context learned across sessions: the active project, current collaborators, open artifacts and alternatives that are no longer relevant. It turns &ldquo;the review&rdquo; into <strong>&ldquo;the FY26Q3 QBR with Priya and Sam&rdquo;</strong> &mdash; a narrower question for an already capable search system.</p>
 
-<figure aria-labelledby="fig7-cap">
+<figure aria-labelledby="fig8-cap">
     <div class="lanes">
 
       <div class="lane lane-a">
@@ -1696,25 +2190,33 @@
       <div class="lane lane-b">
         <div class="lane-head"><span>Memory first</span><span class="cost">1 hop</span></div>
         <div class="lane-body">
-          <div class="hop mem"><span class="n">0</span><span class="txt"><span class="q">memory_read(root)</span><span class="r">which &mdash; QBR, Thursday &middot; whose &mdash; Priya, Sam &middot; when &mdash; FY26Q3 &middot; not &mdash; Atlas, winding down &middot; open &mdash; q3-forecast.xlsx</span></span></div>
+          <div class="hop mem"><span class="n">0</span><span class="txt"><span class="q">read memory/root.md</span><span class="r">which &mdash; QBR, Thursday &middot; whose &mdash; Priya, Sam &middot; when &mdash; FY26Q3 &middot; not &mdash; Atlas, winding down &middot; open &mdash; q3-forecast.xlsx</span></span></div>
           <div class="hop"><span class="n">1</span><span class="txt"><span class="q">search "FY26Q3 QBR" owner:maya with:priya,sam modified:14d</span><span class="r">3 hits, one obviously right</span></span></div>
         </div>
         <div class="lane-out">&#8627; memory supplied who / which / when &middot; search supplied what</div>
       </div>
 
     </div>
-    <figcaption id="fig7-cap"><b>Figure 7 &mdash; the same underspecified question, twice</b>Memory never answered "the review." It answered <em>which</em> review, and handed search a query that could only match one thing. Note that hop 0 rules out as much as it supplies: knowing Atlas is winding down removes two of the three plausible wrong answers before a single document is fetched. Hop counts are illustrative; the shape is the claim, not the integer.</figcaption>
+    <figcaption id="fig8-cap"><b>Figure 8 &mdash; the same underspecified question, twice</b>Hop counts are illustrative.</figcaption>
   </figure>
 
-  <p>What memory supplies is a set of <em>filters</em>, not content: the entity set to disambiguate against, the vocabulary the organisation actually uses, the recency window that matters, the collaborators worth restricting to, the artifacts already open. Each is a precision gain on a problem that is otherwise recall-bound, and each hop saved is a second of latency and a few thousand tokens of search payload that never enter the window.</p>
+  <p>What memory supplies is a set of <strong>filters, not content</strong>: the entity set to disambiguate against, the vocabulary the organisation actually uses, the recency window that matters, the collaborators worth restricting to, the artifacts already open. Each is a precision gain on a problem that is otherwise recall-bound, and each hop saved is a second of latency and a few thousand tokens of search payload that never enter the window.</p>
 
-  <p>Search wins outright in three cases: when the source of truth must be a governed document rather than a projection of one; when the question is about anything other than the person; and when the task is genuinely newer or older than what memory holds, at which point memory contributes noise with high confidence attached. The failure mode to design against is the middle case &mdash; memory holds something plausible and the agent stops there.</p>
+  <p><strong>Search wins outright in three cases:</strong></p>
+
+  <ol>
+    <li>When the source of truth must be a governed document rather than a projection of one.</li>
+    <li>When the question is about anything other than the person.</li>
+    <li>When the task is genuinely newer or older than what memory holds, at which point memory contributes noise with high confidence attached.</li>
+  </ol>
+
+  <p><em>The failure mode to design against is the middle case &mdash; memory holds something plausible and the agent stops there.</em></p>
 </section>
 
 <section id="close">
   <div class="sec-head"><a class="addr-link" href="#close"><span class="addr mono">07</span></a><h2>Evaluate the agent, not the memory</h2></div>
 
-  <p>The baseline is the same agent with memory off, under the same latency and cost constraints. Memory succeeds only if the agent completes more tasks, uses fewer turns and tools, asks fewer unnecessary questions and makes fewer stale assumptions.</p>
+  <p><strong>The baseline is the same agent with memory off</strong>, under comparable latency and cost constraints. <span class="hl-c">Memory succeeds only if the agent completes more tasks, uses fewer turns and tools, asks fewer unnecessary questions and makes fewer stale assumptions.</span></p>
 
   <p>Measure two systems separately. <strong>Memory generation</strong> asks whether the agent forms, updates and removes good records. <strong>Memory usage</strong> asks whether those records improve later work. A system can retrieve its memories perfectly while maintaining the wrong ones.</p>
 
@@ -1733,12 +2235,99 @@
   </table>
   </div>
 
-  <p>Generation and usage fail independently. Test generation with a synthetic day whose correct merges, promotions, corrections and expiries are labelled in advance. Test usage on real tasks. Production logs rarely reveal what the memory should have been after the fact.</p>
+  <p><strong>Generation and usage fail independently.</strong></p>
 
-  <p>Retrieval benchmarks remain useful, but they cover only part of the system. They rarely test concurrent writers, scope promotion, event-bound expiry, access inheritance, deletion propagation or whether memory reduces enterprise-search work. Aggregate accuracy can also hide the tradeoff between recalling more and knowing when not to answer.</p>
+  <ol>
+    <li>Evaluate generation against a labelled synthetic day: did the system merge, promote, correct and expire the right records?</li>
+    <li>Evaluate usage on real tasks: did those records improve the agent&rsquo;s decisions and reduce unnecessary work?</li>
+  </ol>
 
-  <p>What made Maya&rsquo;s Thursday easier was not another copy of the deck. It was the small amount the agents had learned about her work: who reviews margin, which project is winding down, how she names fiscal columns and when she wants a diff instead of a rewrite. If those records reduce work without escaping their scope or surviving past their evidence, memory is helping. <strong>Everything else the organization already knows.</strong></p>
+  <p><em>Production traces show what the system did, but not always what memory it should have formed.</em></p>
+
+  <p>Retrieval benchmarks remain useful, but they <strong>cover only part of the system</strong>. They rarely test concurrent writers, scope promotion, event-bound expiry, access inheritance, deletion propagation or whether memory reduces enterprise-search work. <em>Aggregate accuracy can also hide the tradeoff between recalling more and knowing when not to answer.</em></p>
+
+  <p>What made Maya&rsquo;s Thursday easier was not another copy of the deck. It was the small amount the agents had learned about her work: who reviews margin, which project is winding down, how she structures executive reviews and when she wants a diff instead of a rewrite. If those records reduce work without escaping their scope or surviving past their evidence, memory is helping. <strong>Everything else the organization already knows.</strong></p>
 </section>
+
+<div class="article-summary-divider">Summary</div>
+
+<figure class="summary-figure" aria-labelledby="fig9-cap">
+  <div class="summary-diagram">
+    <div class="hidden-stack">
+      <div class="hidden-layer layer-agent">
+        <b>Agent work</b>
+        <span>personalized responses &middot; proactive recommendations</span>
+      </div>
+      <div class="hidden-layer layer-delivery">
+        <b>Delivery</b>
+        <span>known context into the frozen prefix &middot; possible context retrieved by need</span>
+      </div>
+      <div class="hidden-layer layer-memory">
+        <b>Thin memory</b>
+        <div class="hidden-memory-content">
+          <div class="scope-tree">
+            <span class="summary-kicker">illustrative scope tree</span>
+            <code>memory/<br>&#9500;&#9472; user/<br>&#9500;&#9472; applications/{app}/<br>&#9500;&#9472; projects/{project}/<br>&#9500;&#9472; teams/{team}/<br>&#9492;&#9472; artifacts/{artifact}/</code>
+          </div>
+          <div class="memory-families">
+            <span class="summary-kicker">within each scope</span>
+            <div class="memory-family org"><b>Organizational</b><span>entities &middot; relationships &middot; decisions &middot; work state</span></div>
+            <div class="memory-family pref"><b>Preference</b><span>choices &middot; communication &middot; format &middot; presentation</span></div>
+            <div class="memory-family workflow"><b>Workflow / procedural</b><span>triggers &middot; steps &middot; handoffs &middot; success signals</span></div>
+          </div>
+          <div class="memory-contract-line">type &middot; source &middot; scope &middot; validity &middot; evidence &middot; lineage</div>
+        </div>
+      </div>
+      <div class="hidden-layer layer-consolidation">
+        <b>Consolidation</b>
+        <div class="consolidation-halves">
+          <div class="consolidation-half">
+            <b>Before the first write</b>
+            <span>observe &middot; prefilter &middot; extract candidate records</span>
+          </div>
+          <div class="consolidation-half">
+            <b><span class="loop-cue">&#8634;</span>With existing memory</b>
+            <span>merge &middot; reinforce &middot; correct &middot; promote &middot; expire &middot; delete</span>
+          </div>
+        </div>
+      </div>
+      <div class="hidden-layer layer-policy">
+        <b>Policy &amp; controls</b>
+        <span>source &middot; scope &middot; validity &middot; evidence &middot; lineage &middot; permissions &middot; retention &middot; deletion</span>
+      </div>
+      <div class="hidden-layer layer-sources">
+        <b>Enterprise sources</b>
+        <div class="source-icons">
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+            Email
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+            Chat
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h4"/><path d="M9 12h7M9 16h7"/></svg>
+            Documents
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4z"/><path d="M8 3v6M16 3v6M4 10h16"/></svg>
+            Calendar
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/></svg>
+            CRM
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="m9 11 6-4M9 13l6 4"/></svg>
+            Systems of record
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption id="fig9-cap"><b>Figure 9 &mdash; the enterprise memory stack</b></figcaption>
+</figure>
 
 </main>
 
@@ -1746,6 +2335,8 @@
   <h3>Sources</h3>
   <ul class="sources">
     <li><span class="who">Wu et al. &mdash; LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</span><a href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">arXiv:2410.10813</a></li>
+    <li><span class="who">Maharana et al. &mdash; Evaluating Very Long-Term Conversational Memory of LLM Agents (LoCoMo)</span><a href="https://aclanthology.org/2024.acl-long.747/" target="_blank" rel="noopener">ACL 2024</a></li>
+    <li><span class="who">Cherif &mdash; AgentMemBench: A Systematic Benchmark for Evaluating Long-Term Memory Management Strategies in Conversational AI Agents</span><a href="https://arxiv.org/abs/2608.00009" target="_blank" rel="noopener">arXiv:2608.00009</a></li>
     <li><span class="who">Sumers et al. &mdash; Cognitive Architectures for Language Agents (CoALA)</span><a href="https://arxiv.org/abs/2309.02427" target="_blank" rel="noopener">arXiv:2309.02427</a></li>
     <li><span class="who">Latimer, Boschi et al. &mdash; Hindsight is 20/20: Agent Memory that Retains, Recalls, and Reflects</span><a href="https://arxiv.org/abs/2512.12818" target="_blank" rel="noopener">arXiv:2512.12818</a></li>
     <li><span class="who">Chhikara et al. &mdash; Mem0: Scalable Long-Term Memory for Production AI Agents</span><a href="https://arxiv.org/abs/2504.19413" target="_blank" rel="noopener">arXiv:2504.19413</a></li>
@@ -1753,12 +2344,12 @@
     <li><span class="who">Packer et al. &mdash; MemGPT: Towards LLMs as Operating Systems</span><a href="https://arxiv.org/abs/2310.08560" target="_blank" rel="noopener">arXiv:2310.08560</a></li>
     <li><span class="who">Hao et al. &mdash; User Preference Modeling for Conversational LLM Agents</span><a href="https://arxiv.org/abs/2603.20939" target="_blank" rel="noopener">arXiv:2603.20939</a></li>
     <li><span class="who">Walsh and Ungson &mdash; Organizational Memory</span><a href="https://journals.aom.org/doi/10.5465/AMR.1991.4278992" target="_blank" rel="noopener">Academy of Management Review</a></li>
-    <li><span class="who">Letta &mdash; Evaluating Memory in Production Agents</span><a href="https://www.letta.com/blog/evaluating-memory-in-production-agents/" target="_blank" rel="noopener">letta.com</a></li>
+    <li><span class="who">Letta &mdash; Context-Bench V2: Evaluating Memory in Production Agents</span><a href="https://www.letta.com/blog/evaluating-memory-in-production-agents/" target="_blank" rel="noopener">letta.com</a></li>
     <li><span class="who">OpenAI &mdash; Dreaming: Better memory for a more helpful ChatGPT</span><a href="https://openai.com/index/chatgpt-memory-dreaming/" target="_blank" rel="noopener">openai.com</a></li>
     <li><span class="who">Claude Code &mdash; memory hierarchy, imports, path-scoped rules, auto memory</span><a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">code.claude.com</a></li>
+    <li><span class="who">Microsoft &mdash; Use the Microsoft Search API to query data</span><a href="https://learn.microsoft.com/en-us/graph/api/resources/search-api-overview?view=graph-rest-1.0" target="_blank" rel="noopener">Microsoft Learn</a></li>
     <li><span class="who">Ping-Lin Chang &mdash; The Shapes of Agent Memory</span><a href="https://pinglin.tw/blog/the-shapes-of-agent-memory/" target="_blank" rel="noopener">pinglin.tw</a></li>
   </ul>
-  <p class="closing-line">Maya is fictional. The incidents, the papers and the measured figures are not.<br>Benchmark figures are source-reported and protocol-specific.</p>
 </footer>
 
 </div>

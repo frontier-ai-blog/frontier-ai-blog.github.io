@@ -3,7 +3,7 @@ window.FRONTIER_ARTICLES = [
   {
     href: "articles/enterprise-memory-design-principles.html",
     title: "The Enterprise Memory Iceberg: What Retrieval Benchmarks Don’t See",
-    summary: "Learnings from building the compression, governance and consolidation layers beneath agent recall.",
+    summary: "What it takes to build simple, effective memory for agents.",
     date: "2026-09-02",
     displayDate: "September 2, 2026",
     category: "Agent Memory Architecture",
