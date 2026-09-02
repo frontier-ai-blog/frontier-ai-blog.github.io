@@ -1,6 +1,16 @@
 // Add a new article by placing its HTML file in this folder and adding one entry here.
 window.FRONTIER_ARTICLES = [
   {
+    href: "articles/enterprise-memory-design-principles.html",
+    title: "The Enterprise Memory Iceberg: What Retrieval Benchmarks Don’t See",
+    summary: "Learnings from building the compression, governance and consolidation layers beneath agent recall.",
+    date: "2026-09-02",
+    displayDate: "September 2, 2026",
+    category: "Agent Memory Architecture",
+    visual: "memory",
+    visualLabel: "A governed memory layer compressing observations into durable context"
+  },
+  {
     href: "articles/semantic_boundary_agent_architecture.html",
     title: "The Semantic Boundary: Where Knowledge-Work Agents Should Stop",
     summary: "Where to place the abstraction boundary between semantic construction intent and mechanical artifact execution.",
