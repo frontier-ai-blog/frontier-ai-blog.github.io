@@ -3,7 +3,7 @@ window.FRONTIER_ARTICLES = [
   {
     href: "articles/enterprise-memory-design-principles.html",
     title: "The Enterprise Memory Iceberg: What Retrieval Benchmarks Don’t See",
-    summary: "What it takes to build simple, effective memory for agents.",
+    summary: "What it takes to build simple, effective memory for enterprise agent harnesses.",
     date: "2026-09-02",
     displayDate: "September 2, 2026",
     category: "Agent Memory Architecture",

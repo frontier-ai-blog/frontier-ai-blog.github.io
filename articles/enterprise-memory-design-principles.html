@@ -1674,7 +1674,7 @@
   <div class="hero-inner">
     <div class="hero-badge">Agent Memory Architecture</div>
     <h1>The Enterprise Memory Iceberg: What Retrieval Benchmarks Don&rsquo;t See</h1>
-    <p class="subtitle">What it takes to build simple, effective memory for agents.</p>
+    <p class="subtitle">What it takes to build simple, effective memory for enterprise agent harnesses.</p>
     <p class="byline"><strong>Kartik Fnu</strong> &middot; Applied Scientist II &middot; September 2026</p>
   </div>
 </header>
@@ -1696,7 +1696,7 @@
 <main>
 
 <div class="lede">
-<p>Files, vector stores and temporal graphs all solve a useful problem: helping an agent recover context it would otherwise forget. Inside a company, retrieval is only the beginning. The harder problem is carrying what an agent learns across applications without losing where it came from, where it applies, or when it stops being true.</p>
+<p>Files, vector stores and temporal graphs all solve a useful problem: helping an agent recover context it would otherwise forget. <strong>Inside a company, retrieval is only the beginning.</strong> The harder problem is carrying what an agent learns across applications without losing <em>where it came from, where it applies, or when it stops being true</em>.</p>
 
 <div class="card">
   <div class="card-label"><span>one memory &middot; four entrypoints</span><span>one week</span></div>
@@ -1706,7 +1706,7 @@
   <p><b>One week later &middot; Word.</b> Maya asks for the next Atlas review. Memory carries the preference and project context across applications, recognizes that the provisional restriction has ended, and uses search to retrieve the final forecast.</p>
 </div>
 
-<p>Those systems can recover every artifact in the sequence. What they do not maintain are the relationships between them: which information should carry forward, where it may act and when it should stop. Maya&rsquo;s preference should travel, the Atlas restriction should remain project-scoped, and Priya&rsquo;s confirmation should end it. Memory preserves those relationships and rules, not another copy of the work.</p>
+<p>Those systems can recover every artifact in the sequence. <strong>What they do not maintain are the relationships between them:</strong> which information should carry forward, where it may act and when it should stop. Maya&rsquo;s preference should travel, the Atlas restriction should remain project-scoped, and Priya&rsquo;s confirmation should end it. <em>Memory preserves those relationships and rules, not another copy of the work.</em></p>
 
 <p><strong>Enterprise memory is not another knowledge base.</strong> It is a thin, governed layer over the systems the organization already maintains, holding what working with a person taught the agents and no authoritative system recorded.</p>
 
@@ -1726,7 +1726,7 @@
 <section id="filter">
   <div class="sec-head"><a class="addr-link" href="#filter"><span class="addr mono">01</span></a><h2>The hardest retrieval decisions happen during compression</h2></div>
 
-<p>Memory benchmarks begin with retention. They test whether a system can preserve as much potentially useful information as possible, then update, connect and recover it across long histories. That framing assumes the history remains available and scores the answer &mdash; not the operational cost, governance burden or value of retaining everything that made the answer possible.</p>
+<p>Memory benchmarks begin with retention. They test whether a system can <strong>preserve as much potentially useful information as possible</strong>, then update, connect and recover it across long histories. That framing assumes the history remains available and scores the answer &mdash; <em>not the operational cost, governance burden or value of retaining everything that made the answer possible</em>.</p>
 
 <div class="question-contrast" aria-label="Benchmark and memory-design questions">
   <div class="question-card">
@@ -1737,13 +1737,13 @@
   </div>
 </div>
 
-<p>Most of what an agent learns about a person has a <strong>short useful life</strong>: a task closes, a document ships, a project winds down, a preference is corrected. The rare facts that genuinely matter six months later &mdash; <span class="hl-c">who owns what, what was decided, which document is authoritative</span> &mdash; are usually already held, and held better, by company systems. Smaller, scoped memory handles most of the remainder without semantic search over thousands of accumulated facts. For memory to work well, this means preserving a thin layer of durable instructions and working context &mdash; not building another knowledge base. The goal is the smallest memory that still changes the agent's behaviour for the better.</p>
+<p>Most of what an agent learns about a person has a <strong>short useful life</strong>: a task closes, a document ships, a project winds down, a preference is corrected. The rare facts that genuinely matter six months later &mdash; <span class="hl-c">who owns what, what was decided, which document is authoritative</span> &mdash; are usually already held, and held better, by company systems. Smaller, scoped memory handles most of the remainder without semantic search over thousands of accumulated facts. For memory to work well, this means preserving a thin layer of durable instructions and working context &mdash; not building another knowledge base. <strong>The goal is the smallest memory that still changes the agent's behaviour for the better.</strong></p>
 
 <p>Memory cost is not the price of storing a few kilobytes. It is the recurring overhead added to every conversation: context assembly, cache writes, semantic queries, ranking, model tokens, consolidation, permission checks and eventual deletion. <span class="cost-inline">The back-of-the-envelope calculation of just 20&cent; memory overhead per conversation, assuming 5 conversations per seat &times; 50,000 seats, that &gt;<strong>$15 million a year</strong>.</span></p>
 
 <div class="pull"><p>A retrieval system is judged on what it can find. <em>A compression system is judged on what it can throw away</em> without changing the output &mdash; and on what breaks when it throws away too much.</p></div>
 
-  <p><span class="runin">The test</span>Instrument how often a memory older than thirty days is the thing that makes a task succeed. Repeat the measurement at ninety days, six months and one year, separated by memory type. Measure the failures too: stale assumptions, incorrect search filters, unnecessary context and answers produced from something that should already have expired. The retention window should come from those curves, not from how much the underlying store can hold.</p>
+  <p><span class="runin">The test</span>Instrument how often a memory older than thirty days is the thing that makes a task succeed. Repeat the measurement at ninety days, six months and one year, separated by memory type. Measure the failures too: stale assumptions, incorrect search filters, unnecessary context and answers produced from something that should already have expired. <em>The retention window should come from those curves, not from how much the underlying store can hold.</em></p>
 </section>
 
 <section id="types">
@@ -1807,7 +1807,7 @@
     <figcaption id="fig2-cap"><b>Figure 2 &mdash; the sourced memory vocabulary</b>Terms overlap because they describe different dimensions. This is a vocabulary map, not a storage schema.</figcaption>
   </figure>
 
-  <p>For this enterprise design, we use three durable memory types. They are not supersets of the labels above and do not need a one-to-one mapping. They identify three kinds of information that agents must learn and maintain differently.</p>
+  <p><strong>For this enterprise design, we use three durable memory types.</strong> They are not supersets of the labels above and do not need a one-to-one mapping. They identify three kinds of information that agents must learn and maintain differently.</p>
 
   <figure aria-labelledby="fig3-cap">
     <div class="memory-triad">
@@ -1833,9 +1833,15 @@
     <figcaption id="fig3-cap"><b>Figure 3 &mdash; three enterprise memory types</b></figcaption>
   </figure>
 
-  <p>Workflow memory is learned over a longer horizon than a single instruction. It comes from comparing trajectories across conversations: where the agent repeatedly takes a wrong turn, where the user redirects it, which sources resolve the task fastest, which handoffs recur and which larger goal connects otherwise separate requests. It is not a transcript of what happened. It is a compact model of how this user's work tends to progress.</p>
+  <p><strong>Workflow memory is learned over a longer horizon than a single instruction.</strong> It comes from comparing trajectories across conversations: where the agent repeatedly takes a wrong turn, where the user redirects it, which sources resolve the task fastest, which handoffs recur and which larger goal connects otherwise separate requests. <em>It is not a transcript of what happened. It is a compact model of how this user's work tends to progress.</em></p>
 
-  <p>Working and conversational memory can remain runtime context. Episodic traces can remain temporary evidence used to derive durable records. Artifact is usually a scope, and evidence is provenance attached to a record. They remain useful concepts without becoming separate top-level types in this design.</p>
+  <p>The remaining labels still have clear roles:</p>
+  <ul>
+    <li><strong>Working and conversational memory</strong> can remain runtime context.</li>
+    <li><strong>Episodic traces</strong> can remain temporary evidence used to derive durable records.</li>
+    <li><strong>Artifact</strong> is usually a scope, and <strong>evidence</strong> is provenance attached to a record.</li>
+  </ul>
+  <p><em>They remain useful concepts without becoming separate top-level types in this design.</em></p>
 </section>
 <section id="schema">
   <div class="sec-head"><a class="addr-link" href="#schema"><span class="addr mono">03</span></a><h2>Every memory type needs a schema</h2></div>
@@ -1852,9 +1858,14 @@
 
   <p>Similarity is not a memory policy. A project, a person, a task, a preference and a workflow may all mention the same document. They are still different objects because they change in different ways. <strong>Maintained memory needs a typed schema.</strong></p>
 
-  <p>Type says what the record is. Scope says where it may act. Source says why it is believed. Validity says when it stops. Importance says whether it deserves attention. Evidence and lineage appear when the record was inferred or derived.</p>
+  <p>The schema answers three groups of questions:</p>
+  <ul>
+    <li><strong>Type and scope:</strong> what the record is and where it may act.</li>
+    <li><strong>Source and validity:</strong> why it is believed and when it stops.</li>
+    <li><strong>Importance, evidence and lineage:</strong> whether it deserves attention and what supports or depends on it.</li>
+  </ul>
 
-  <p>Embeddings answer: <em>what looks related?</em> Typed ranking answers: <em>what should influence this recommendation now?</em> Filter for scope and validity. Authority is not confidence: one stated instruction outranks repeated inference. Rank the remaining records by importance, evidence, recency and semantic fit.</p>
+  <p>Embeddings answer: <em>what looks related?</em> Typed ranking answers: <em>what should influence this recommendation now?</em> Filter for scope and validity. <strong>Authority is not confidence:</strong> one stated instruction outranks repeated inference. Rank the remaining records by importance, evidence, recency and semantic fit.</p>
 
   <p class="tnum"><b>Table 2</b> &mdash; common governance fields, applied by type</p>
   <div class="table-wrap">
@@ -1952,11 +1963,11 @@
 
   <h3>Records for maintenance, prose for reading</h3>
 
-  <p>Typed records do not require giving up markdown. The maintained form and the served form have different jobs. Tools write structured records so the system can expire, retract, traverse and audit them. The model reads a compact prose projection because prose carries more meaning per token and is easier to scan.</p>
+  <p>Typed records do not require giving up markdown. <strong>The maintained form and the served form have different jobs.</strong> Tools write structured records so the system can expire, retract, traverse and audit them. The model reads a compact prose projection because <em>prose carries more meaning per token and is easier to scan</em>.</p>
 
   <h3>Separate the contract from the implementation</h3>
 
-  <p>Typed records create a boundary between what memory means and where it is stored. Sources and storage can change without changing the contracts above them.</p>
+  <p>Typed records create a boundary between <strong>what memory means</strong> and <strong>where it is stored</strong>. Sources and storage can change without changing the contracts above them.</p>
 
   <figure aria-labelledby="fig5-cap">
     <div class="stack">
@@ -1974,7 +1985,7 @@
 <section id="writing">
   <div class="sec-head"><a class="addr-link" href="#writing"><span class="addr mono">04</span></a><h2>Dreaming: Night and Day</h2></div>
 
-  <p>An agent can collect hundreds of plausible memories in a day. Most are routine activity, duplicates, automated noise or one-off behavior. Save them all and memory becomes an activity log within days: larger, less precise and less trustworthy. Memory has a day shift and a dream shift: by day, the agent collects evidence; at night, it decides what deserves to survive.</p>
+  <p>An agent can collect hundreds of plausible memories in a day. Most are routine activity, duplicates, automated noise or one-off behavior. <strong>Save them all and memory becomes an activity log within days:</strong> larger, less precise and less trustworthy. <em>Memory has a day shift and a dream shift: by day, the agent collects evidence; at night, it decides what deserves to survive.</em></p>
 
   <p><strong>Dreaming is the offline pass that turns observation into maintained memory.</strong> OpenAI uses the term for background synthesis; here it means comparing a window of experience, updating the typed records that already exist and discarding what should not survive. The delay is essential because hindsight separates an event from a pattern.</p>
 
@@ -2063,9 +2074,9 @@
     <p><b>Observation without consolidation.</b> A model can inspect the latest raw signals while their local context is still available and flag what may matter. It does not merge evidence, infer patterns, widen scope or write durable memory; the night pass decides what survives.</p>
   </div>
 
-  <p>Most signals do not require a model decision. Duplicates, no-ops, automated messages and activity with no human decision or action can be removed deterministically. The model should see a small candidate set, not the entire day.</p>
+  <p><strong>Most signals do not require a model decision.</strong> Duplicates, no-ops, automated messages and activity with no human decision or action can be removed deterministically. <em>The model should see a small candidate set, not the entire day.</em></p>
 
-  <p>The remaining work requires judgment: whether observations reinforce an existing preference, change a project, reveal a workflow or mean nothing durable. This is the difference between collecting history and maintaining memory.</p>
+  <p><strong>The remaining work requires judgment:</strong> whether observations reinforce an existing preference, change a project, reveal a workflow or mean nothing durable. <em>This is the difference between collecting history and maintaining memory.</em></p>
 
   <h3>What dreaming does</h3>
 
@@ -2091,9 +2102,9 @@
   </table>
   </div>
 
-  <p>A stated correction is not another observation. It is an override. If Maya says, &ldquo;Stop shortening my email subjects,&rdquo; the next dream must not weigh that instruction against twelve earlier acceptances. Explicit memory actions belong in an append-only diary so the same history cannot recreate what the user removed.</p>
+  <p><strong>A stated correction is not another observation. It is an override.</strong> If Maya says, &ldquo;Stop shortening my email subjects,&rdquo; the next dream must not weigh that instruction against twelve earlier acceptances. Explicit memory actions belong in an append-only diary so the same history cannot recreate what the user removed.</p>
 
-  <p>Removal is part of the same pass. When a source is deleted, a person leaves or a retention window closes, dreaming follows <code>source</code> and <code>derived_from</code> to anything that depended on it. Otherwise the next pass can infer the deleted memory again.</p>
+  <p><strong>Removal is part of the same pass.</strong> When a source is deleted, a person leaves or a retention window closes, dreaming follows <code>source</code> and <code>derived_from</code> to anything that depended on it. <em>Otherwise the next pass can infer the deleted memory again.</em></p>
 
   <p>A bad retrieval damages one turn. A bad merge, promotion or inference changes what every later session believes. <strong>Dreaming is where memory becomes smaller &mdash; and where it becomes safe to trust.</strong></p>
 </section>
@@ -2101,19 +2112,27 @@
 <section id="delivery">
   <div class="sec-head"><a class="addr-link" href="#delivery"><span class="addr mono">05</span></a><h2>Load by scope, retrieve by need</h2></div>
 
-  <p>Memory is useful before the first tool call. Root memory and the active application are already known when a session begins, so load them. Keep everything else visible through a compact index and fetch it only when the task crosses into that scope.</p>
+  <p><strong>Memory is useful before the first tool call.</strong> Root memory and the active application are already known when a session begins, so load them. Keep everything else visible through a compact index and fetch it only when the task crosses into that scope.</p>
 
-  <p>This is not eager versus lazy retrieval. It is certainty versus speculation. Load the user, current projects, promoted preferences and anything attached to the open artifact. Expose the names and locations of other memory without loading the payload. <span class="hl"><em>Eager on the certain, lazy on the speculative.</em></span></p>
+  <p>This is not eager versus lazy retrieval. <strong>It is certainty versus speculation.</strong></p>
+  <ol>
+    <li>Load the user, current projects, promoted preferences and anything attached to the open artifact.</li>
+    <li>Expose the names and locations of other memory without loading the payload.</li>
+  </ol>
+  <p><span class="hl"><em>Eager on the certain, lazy on the speculative.</em></span></p>
 
-  <p>A compact projection also gives caching something stable to reuse. Root memory changes rarely. Artifact memory changes with the document. The volatile tier should therefore stay the smallest.</p>
+  <p>A compact projection also gives caching something stable to reuse. <strong>Root memory changes rarely. Artifact memory changes with the document.</strong> The volatile tier should therefore stay the smallest.</p>
 
   <h3>Use the tools the harness already knows</h3>
 
-  <p>Memory should look like a small filesystem, not a new tool ecosystem. Let the agent use the <code>glob</code>, <code>grep</code>, <code>read</code> and <code>write</code> tools the harness already provides. <code>memory_read</code> and <code>memory_write</code> are not two more model-visible tools; they are the policy-enforcing abstraction behind those existing read and write operations when the path points into memory.</p>
+  <p><strong>Memory should look like a small filesystem, not a new tool ecosystem.</strong> Let the agent use the <code>glob</code>, <code>grep</code>, <code>read</code> and <code>write</code> tools the harness already provides. <code>memory_read</code> and <code>memory_write</code> are not two more model-visible tools; they are the policy-enforcing abstraction behind those existing read and write operations when the path points into memory.</p>
 
-  <p>A shared memory store does not imply a shared view. Every entrypoint receives its own projection of the memory tree, filtered by application, artifact, user, source permissions and policy. App A can read promoted user context and App A memory; App B remains invisible unless the task and policy explicitly require cross-application access. Parent folders are not automatically readable merely because a child is mounted.</p>
+  <ul>
+    <li><strong>Read boundary.</strong> A shared memory store does not imply a shared view. Every entrypoint receives its own projection of the memory tree, filtered by application, artifact, user, source permissions and policy. App A can read promoted user context and App A memory; App B remains invisible unless the task and policy explicitly require cross-application access. Parent folders are not automatically readable merely because a child is mounted.</li>
+    <li><strong>Write boundary.</strong> Agents can create, update and delete memory within the scope they are operating in, but they cannot change a sibling, parent or team scope unless that capability is explicitly granted. <code>memory_write</code> enforces both the operation and its scope. Consolidation performs promotion only after checking evidence, provenance and permission inheritance.</li>
+  </ul>
 
-  <p>The write boundary is tighter. Agents can create, update and delete memory within the scope they are operating in, but they cannot change a sibling, parent or team scope unless that capability is explicitly granted. <code>memory_write</code> enforces both the operation and its scope. Consolidation performs promotion only after checking evidence, provenance and permission inheritance. This keeps a convenient filesystem interface without turning every agent into an administrator of the entire memory store.</p>
+  <p><em>This keeps a convenient filesystem interface without turning every agent into an administrator of the entire memory store.</em></p>
 
   <figure aria-labelledby="fig7-cap">
     <div class="permission-map">
@@ -2159,9 +2178,9 @@
 
   <h3>Compaction is a reload boundary</h3>
 
-  <p>Compaction preserves enough conversational state for the session to continue; it does not preserve a memory contract. Even when a summary retains the fact itself, it may lose fields such as <code>source</code>, <code>assertion</code>, <code>scope</code> and <code>valid</code>. A plausible sentence is not a substitute for the maintained record behind it.</p>
+  <p><strong>Compaction preserves enough conversational state for the session to continue; it does not preserve a memory contract.</strong> Even when a summary retains the fact itself, it may lose fields such as <code>source</code>, <code>assertion</code>, <code>scope</code> and <code>valid</code>. <em>A plausible sentence is not a substitute for the maintained record behind it.</em></p>
 
-  <p>In this design, the system prompt, tools prompt and memory projection form a frozen prefix when the context is built. Compaction logic can differ across harnesses. When the harness rebuilds the context, it reads the maintained memory again and injects the current projection rather than relying on memory carried through the summary.</p>
+  <p>In this design, the <strong>system prompt, tools prompt and memory projection form a frozen prefix</strong> when the context is built. Compaction logic can differ across harnesses. When the harness rebuilds the context, it reads the maintained memory again and injects the current projection rather than relying on memory carried through the summary.</p>
 
   <p><span class="runin">A working example</span>Claude Code loads broad instruction files at session start, loads narrower path-scoped files when matching files are accessed, and re-reads project-root instructions after compaction. The enterprise version uses different scopes, but the pattern is the same: deterministic loading for known context, progressive disclosure for the rest.</p>
 </section>
