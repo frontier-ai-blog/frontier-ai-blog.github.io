@@ -7,7 +7,7 @@ window.FRONTIER_ARTICLES = [
     date: "2026-09-02",
     displayDate: "September 2, 2026",
     category: "Agent Memory Architecture",
-    visual: "memory",
+    visual: "enterpriseMemory",
     visualLabel: "A governed memory layer compressing observations into durable context"
   },
   {
