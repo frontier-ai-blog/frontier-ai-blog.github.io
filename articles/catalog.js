@@ -2,10 +2,10 @@
 window.FRONTIER_ARTICLES = [
   {
     href: "articles/enterprise-memory-design-principles.html",
-    title: "The Enterprise Memory Iceberg: What Retrieval Benchmarks Don’t See",
+    title: "Beyond Recall: Designing Memory for Enterprise Agents",
     summary: "What it takes to build simple, effective memory for enterprise agent harnesses.",
-    date: "2026-09-02",
-    displayDate: "September 2, 2026",
+    date: "2026-10-12",
+    displayDate: "Updated October 12, 2026",
     category: "Agent Memory Architecture",
     visual: "enterpriseMemory",
     visualLabel: "A governed memory layer compressing observations into durable context"

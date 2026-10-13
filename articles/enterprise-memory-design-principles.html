@@ -19,9 +19,9 @@
 <meta name="color-scheme" content="light dark">
 <meta name="author" content="Kartik Fnu">
 <link rel="icon" type="image/svg+xml" href="../assets/copilot-favicon.svg">
-<title>The Enterprise Memory Iceberg: What Retrieval Benchmarks Don’t See | Frontier AI for Office Science</title>
+<title>Beyond Recall: Designing Memory for Enterprise Agents | Frontier AI for Office Science</title>
 <meta name="description" content="Learnings from building the compression, governance and consolidation layers beneath agent recall.">
-<meta property="og:title" content="The Enterprise Memory Iceberg: What Retrieval Benchmarks Don’t See">
+<meta property="og:title" content="Beyond Recall: Designing Memory for Enterprise Agents">
 <meta property="og:description" content="Learnings from building the compression, governance and consolidation layers beneath agent recall.">
 <meta property="og:type" content="article">
 <style>
@@ -1674,9 +1674,9 @@
 <header class="hero">
   <div class="hero-inner">
     <div class="hero-badge">Agent Memory Architecture</div>
-    <h1>The Enterprise Memory Iceberg: What Retrieval Benchmarks Don&rsquo;t See</h1>
+    <h1>Beyond Recall: Designing Memory for Enterprise Agents</h1>
     <p class="subtitle">What it takes to build simple, effective memory for enterprise agent harnesses.</p>
-    <p class="byline"><strong>Kartik Fnu</strong> &middot; Applied Scientist II &middot; September 2026</p>
+    <p class="byline"><strong>Kartik Fnu</strong> &middot; Applied Scientist II &middot; Updated <time datetime="2026-10-12">October 12, 2026</time></p>
   </div>
 </header>
 
@@ -1696,20 +1696,90 @@
 
 <main>
 
+<figure class="summary-figure" aria-labelledby="fig9-cap">
+  <div class="summary-diagram">
+    <div class="hidden-stack">
+      <div class="hidden-layer layer-agent">
+        <b>Agent work</b>
+        <span>personalized responses &middot; proactive recommendations</span>
+      </div>
+      <div class="hidden-layer layer-delivery">
+        <b>Delivery</b>
+        <span>known context into the frozen prefix &middot; possible context retrieved by need</span>
+      </div>
+      <div class="hidden-layer layer-memory">
+        <b>Thin memory</b>
+        <div class="hidden-memory-content">
+          <div class="scope-tree">
+            <span class="summary-kicker">illustrative scope tree</span>
+            <code>memory/<br>&#9500;&#9472; user/<br>&#9500;&#9472; applications/{app}/<br>&#9500;&#9472; projects/{project}/<br>&#9500;&#9472; teams/{team}/<br>&#9492;&#9472; artifacts/{artifact}/</code>
+          </div>
+          <div class="memory-families">
+            <span class="summary-kicker">within each scope</span>
+            <div class="memory-family org"><b>Organizational</b><span>entities &middot; relationships &middot; decisions &middot; work state</span></div>
+            <div class="memory-family pref"><b>Preference</b><span>choices &middot; communication &middot; format &middot; presentation</span></div>
+            <div class="memory-family workflow"><b>Workflow / procedural</b><span>triggers &middot; steps &middot; handoffs &middot; success signals</span></div>
+          </div>
+          <div class="memory-contract-line">type &middot; source &middot; scope &middot; validity &middot; evidence &middot; lineage</div>
+        </div>
+      </div>
+      <div class="hidden-layer layer-consolidation">
+        <b>Consolidation</b>
+        <div class="consolidation-halves">
+          <div class="consolidation-half">
+            <b>Form candidate memories</b>
+            <span>observe work &middot; filter noise &middot; identify patterns</span>
+          </div>
+          <div class="consolidation-half">
+            <b><span class="loop-cue">&#8634;</span>Maintain durable memory</b>
+            <span>merge &middot; reinforce &middot; correct &middot; promote &middot; expire &middot; delete</span>
+          </div>
+        </div>
+      </div>
+      <div class="hidden-layer layer-policy">
+        <b>Policy &amp; controls</b>
+        <span>source &middot; scope &middot; validity &middot; evidence &middot; lineage &middot; permissions &middot; retention &middot; deletion</span>
+      </div>
+      <div class="hidden-layer layer-sources">
+        <b>Enterprise sources</b>
+        <div class="source-icons">
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+            Email
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+            Chat
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h4"/><path d="M9 12h7M9 16h7"/></svg>
+            Documents
+          </span>
+          <span class="source-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4z"/><path d="M8 3v6M16 3v6M4 10h16"/></svg>
+            Calendar
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption id="fig9-cap"><b>Figure 1 &mdash; the enterprise memory stack</b></figcaption>
+</figure>
+
 <div class="lede">
-<p>Files, vector stores and temporal graphs all solve a useful problem: helping an agent recover context it would otherwise forget. <strong>Inside a company, retrieval is only the beginning.</strong> The harder problem is carrying what an agent learns across applications without losing <em>where it came from, where it applies, or when it stops being true</em>.</p>
+<p>Persistent notes, structured records, vector search and temporal knowledge graphs all help agents store and recall context from past interactions. In a large enterprise, much of the preference and context worth learning comes not just from interactions with agents across applications, but also from the work people do in those applications: revising documents, discussing decisions in chat, confirming changes by email and handing tasks to colleagues. As that work moves across applications, memory agents need to connect these observations into an understanding of people&rsquo;s preferences, ongoing projects and recurring workflows. That memory should help whichever agent handles the next conversation follow a preference without another reminder, find the right project material, or drop an assumption that no longer holds. This article explores how to build and maintain that shared understanding without retaining every interaction &mdash; and how to tell whether it actually makes the next task easier.</p>
 
 <div class="card">
-  <div class="card-label"><span>one memory &middot; four entrypoints</span><span>one week</span></div>
-  <p><b>PowerPoint.</b> Maya tells the agent to lead executive reviews with decisions.</p>
-  <p><b>Teams.</b> The project group marks the Atlas forecast provisional until Finance closes the books on Friday.</p>
-  <p><b>Outlook.</b> Priya confirms the final numbers by email.</p>
-  <p><b>One week later &middot; Word.</b> Maya asks for the next Atlas review. Memory carries the preference and project context across applications, recognizes that the provisional restriction has ended, and uses search to retrieve the final forecast.</p>
+  <div class="card-label"><span>one week &middot; four applications</span><span>Atlas review</span></div>
+  <p><b>PowerPoint.</b> While preparing an Atlas executive review, Maya asks the agent to put decisions before supporting detail.</p>
+  <p><b>Teams.</b> The project group says the Atlas forecast must stay marked preliminary until Finance closes the books.</p>
+  <p><b>Outlook.</b> Later that week, Priya confirms that Finance has closed the books and the forecast is final.</p>
+  <p><b>The following week &middot; Word.</b> Maya asks for the next Atlas review. The agent leads with decisions, uses search to find the finalized forecast, and leaves off the preliminary label. Maya does not have to repeat her preference or explain what changed.</p>
 </div>
 
-<p>Those systems can recover every artifact in the sequence. <strong>What they do not maintain are the relationships between them:</strong> which information should carry forward, where it may act and when it should stop. Maya&rsquo;s preference should travel, the Atlas restriction should remain project-scoped, and Priya&rsquo;s confirmation should end it. <em>Memory preserves those relationships and rules, not another copy of the work.</em></p>
+<p>The useful memory here is small. It carries Maya&rsquo;s preference into the next review, keeps the forecast restriction tied to Atlas, and retires that restriction when Finance&rsquo;s confirmation arrives. It does not need to keep another copy of the deck, chat or email. It needs enough context to guide the next task &mdash; and a link back to the evidence when the agent needs to check.</p>
 
-<p><strong>Enterprise memory is not another knowledge base.</strong> It is a thin, governed layer over the systems the organization already maintains, holding what working with a person taught the agents and no authoritative system recorded.</p>
+<p>That distinction shapes the design: combine observations across applications, preserve their source and scope, recognize when context no longer applies, and track which conclusions depend on which evidence.</p>
 
 <figure aria-labelledby="fig1-cap">
     <div class="chal">
@@ -1718,7 +1788,7 @@
       <div class="ch"><span class="n">obligation 03</span><b>Represent when context ends</b><span class="d">&ldquo;Strike the indemnity cap&rdquo; was correct until the contract was signed. Not stale &mdash; <i>ended</i>, at a knowable event a decay curve cannot express.</span></div>
       <div class="ch"><span class="n">obligation 04</span><b>Keep compression reversible</b><span class="d">Three observations become one preference, then support another conclusion. If the source disappears, the system still has to know <i>what depended on it</i>.</span></div>
     </div>
-    <figcaption id="fig1-cap"><b>Figure 1 &mdash; four obligations that shape the memory contract</b></figcaption>
+    <figcaption id="fig1-cap"><b>Figure 2 &mdash; four obligations that shape the memory contract</b></figcaption>
   </figure>
 
 </div>
@@ -1738,11 +1808,9 @@
   </div>
 </div>
 
-<p>Most of what an agent learns about a person has a <strong>short useful life</strong>: a task closes, a document ships, a project winds down, a preference is corrected. The rare facts that genuinely matter six months later &mdash; <span class="hl-c">who owns what, what was decided, which document is authoritative</span> &mdash; are usually already held, and held better, by company systems. Smaller, scoped memory handles most of the remainder without semantic search over thousands of accumulated facts. For memory to work well, this means preserving a thin layer of durable instructions and working context &mdash; not building another knowledge base. <strong>The goal is the smallest memory that still changes the agent's behaviour for the better.</strong></p>
+<p>Most of what an agent learns about a person has a <strong>short useful life</strong>: a task closes, a document ships, a project winds down, a preference is corrected. Information that remains useful months later &mdash; <span class="hl-c">who owns a project, what a team decided, or which document is approved</span> &mdash; often already lives in the systems where that work is managed. Memory can help agents find and use those sources without keeping a separate copy of the facts. Smaller, scoped memory handles most of the remainder without semantic search over thousands of accumulated facts. For memory to work well, this means preserving a thin layer of durable instructions and working context &mdash; not building another knowledge base. <strong>The goal is the smallest memory that still changes the agent's behaviour for the better.</strong></p>
 
-<p>Memory cost is not the price of storing a few kilobytes. It is the recurring overhead added to every conversation: context assembly, cache writes, semantic queries, ranking, model tokens, consolidation, permission checks and eventual deletion. <span class="cost-inline">The back-of-the-envelope calculation of just 20&cent; memory overhead per conversation, assuming 5 conversations per seat &times; 50,000 seats, that &gt;<strong>$15 million a year</strong>.</span></p>
-
-<div class="pull"><p>A retrieval system is judged on what it can find. <em>A compression system is judged on what it can throw away</em> without changing the output &mdash; and on what breaks when it throws away too much.</p></div>
+<p>Memory cost is not the price of storing a few kilobytes. It is the recurring overhead added to every conversation: context assembly, cache writes, semantic queries, ranking, model tokens, consolidation, permission checks and eventual deletion. <span class="cost-inline">At just 20&cent; memory overhead per conversation, assuming 5 conversations per seat per day &times; 50,000 seats &times; 365 days, that's <strong>&gt;$15 million a year</strong>.</span></p>
 
   <p><span class="runin">The test</span>Instrument how often a memory older than thirty days is the thing that makes a task succeed. Repeat the measurement at ninety days, six months and one year, separated by memory type. Measure the failures too: stale assumptions, incorrect search filters, unnecessary context and answers produced from something that should already have expired. <em>The retention window should come from those curves, not from how much the underlying store can hold.</em></p>
 </section>
@@ -1805,7 +1873,7 @@
       <i><span class="sw procedure-range"></span>procedural knowledge</i>
       <i><span class="sw"></span>runtime context</i>
     </div>
-    <figcaption id="fig2-cap"><b>Figure 2 &mdash; the sourced memory vocabulary</b>Terms overlap because they describe different dimensions. This is a vocabulary map, not a storage schema.</figcaption>
+    <figcaption id="fig2-cap"><b>Figure 3 &mdash; the sourced memory vocabulary</b>Terms overlap because they describe different dimensions. This is a vocabulary map, not a storage schema.</figcaption>
   </figure>
 
   <p><strong>For this enterprise design, we use three durable memory types.</strong> They are not supersets of the labels above and do not need a one-to-one mapping. They identify three kinds of information that agents must learn and maintain differently.</p>
@@ -1831,7 +1899,7 @@
         <span class="triad-example"><em>Examples</em> Apply a Word style guide learned across an editing session; build meeting briefs from the latest decision log; validate reported numbers against the source system before sharing.</span>
       </div>
     </div>
-    <figcaption id="fig3-cap"><b>Figure 3 &mdash; three enterprise memory types</b></figcaption>
+    <figcaption id="fig3-cap"><b>Figure 4 &mdash; three enterprise memory types</b></figcaption>
   </figure>
 
   <p><strong>Workflow memory is learned over a longer horizon than a single instruction.</strong> It comes from comparing trajectories across conversations: where the agent repeatedly takes a wrong turn, where the user redirects it, which sources resolve the task fastest, which handoffs recur and which larger goal connects otherwise separate requests. <em>It is not a transcript of what happened. It is a compact model of how this user's work tends to progress.</em></p>
@@ -1847,17 +1915,7 @@
 <section id="schema">
   <div class="sec-head"><a class="addr-link" href="#schema"><span class="addr mono">03</span></a><h2>Every memory type needs a schema</h2></div>
 
-  <div class="card">
-    <div class="card-label"><span>document opened</span><span>three recommendations</span></div>
-    <p>Maya opens a new quarterly-review document. Before she asks, the agent recommends:</p>
-    <p><b>Add margin beside revenue.</b> Maya accepted this layout in three previous quarterly reviews.</p>
-    <p><b>Ask Priya to review the assumptions.</b> In her Monday email, Priya confirmed that she owns the margin review.</p>
-    <p><b>Keep the Atlas figures marked preliminary.</b> Finance expects to close the books on Friday.</p>
-  </div>
-
-  <div class="keyline">The model can read three lines of prose. The system maintaining them needs to know <b>where each recommendation applies, what supports it and when it should stop appearing</b>.</div>
-
-  <p>Similarity is not a memory policy. A project, a person, a task, a preference and a workflow may all mention the same document. They are still different objects because they change in different ways. <strong>Maintained memory needs a typed schema.</strong></p>
+  <p>A learned preference needs more than a sentence. Maya&rsquo;s repeated edits may suggest that she prefers rounded figures in executive presentations &mdash; not in audit workbooks. If the agent learns something from a confidential document, that memory must not surface in contexts that lack access to the source; a temporary memory may also need to expire after a few days. <strong>A schema makes these boundaries explicit and links each inference to its supporting evidence</strong>, so the system knows where it can be used, when to retire it and what to reconsider if its source changes.</p>
 
   <p>The schema answers three groups of questions:</p>
   <ul>
@@ -1865,8 +1923,6 @@
     <li><strong>Source and validity:</strong> why it is believed and when it stops.</li>
     <li><strong>Importance, evidence and lineage:</strong> whether it deserves attention and what supports or depends on it.</li>
   </ul>
-
-  <p>Embeddings answer: <em>what looks related?</em> Typed ranking answers: <em>what should influence this recommendation now?</em> Filter for scope and validity. <strong>Authority is not confidence:</strong> one stated instruction outranks repeated inference. Rank the remaining records by importance, evidence, recency and semantic fit.</p>
 
   <p class="tnum"><b>Table 2</b> &mdash; common governance fields, applied by type</p>
   <div class="table-wrap">
@@ -1885,7 +1941,7 @@
 
   <h3>Let the type decide the fields</h3>
 
-  <p>A memory type describes how information behaves. Within it, different entities still need different contracts. The five below are enough to maintain the recommendation example without pretending to be a complete enterprise ontology.</p>
+  <p>A memory type describes how information behaves. Within it, different entities still need different contracts. Below are example schemas for five common memory records.</p>
 
   <figure aria-labelledby="fig4-cap">
     <div class="schemas">
@@ -1959,16 +2015,12 @@
       </div>
 
     </div>
-    <figcaption id="fig4-cap"><b>Figure 4 &mdash; five records, three memory families</b></figcaption>
+    <figcaption id="fig4-cap"><b>Figure 5 &mdash; five records, three memory families</b></figcaption>
   </figure>
 
   <h3>Records for maintenance, prose for reading</h3>
 
-  <p>Typed records do not require giving up markdown. <strong>The maintained form and the served form have different jobs.</strong> Tools write structured records so the system can expire, retract, traverse and audit them. The model reads a compact prose projection because <em>prose carries more meaning per token and is easier to scan</em>.</p>
-
-  <h3>Separate the contract from the implementation</h3>
-
-  <p>Typed records create a boundary between <strong>what memory means</strong> and <strong>where it is stored</strong>. Sources and storage can change without changing the contracts above them.</p>
+  <p>Typed records do not require giving up markdown. <strong>The maintained form and the served form have different jobs.</strong> Tools write structured records so the system can expire, retract, traverse and audit them. The model reads a compact prose projection because <em>prose carries more meaning per token and is easier to scan</em>. Typed records also create a boundary between <strong>what memory means</strong> and <strong>where it is stored</strong>. Sources and storage can change without changing the contracts above them.</p>
 
   <figure aria-labelledby="fig5-cap">
     <div class="stack">
@@ -1979,7 +2031,7 @@
       <div class="layer plug"><span class="lname">store</span><span class="lval">files &middot; vector index &middot; temporal graph &middot; a vendor memory service</span></div>
       <div class="layer plug"><span class="lname">sources</span><span class="lval">email &middot; chat &middot; documents &middot; calendar &middot; CRM &middot; partner agents &middot; connectors</span></div>
     </div>
-    <figcaption id="fig5-cap"><b>Figure 5 &mdash; separate the contract from the implementation</b></figcaption>
+    <figcaption id="fig5-cap"><b>Figure 6 &mdash; separate the contract from the implementation</b></figcaption>
   </figure>
 </section>
 
@@ -2065,19 +2117,12 @@
       </div>
 
     </div>
-    <figcaption id="fig6-cap"><b>Figure 6 &mdash; one night, 340 signals in, five writes out</b>Counts are illustrative; measure the signal-to-write ratio in your own system.</figcaption>
+    <figcaption id="fig6-cap"><b>Figure 7 &mdash; one night, 340 signals in, five writes out</b></figcaption>
   </figure>
 
   <h3>Filter before inference</h3>
 
-  <div class="rf">
-    <span class="who">Daydreaming</span>
-    <p><b>Observation without consolidation.</b> A model can inspect the latest raw signals while their local context is still available and flag what may matter. It does not merge evidence, infer patterns, widen scope or write durable memory; the night pass decides what survives.</p>
-  </div>
-
-  <p><strong>Most signals do not require a model decision.</strong> Duplicates, no-ops, automated messages and activity with no human decision or action can be removed deterministically. <em>The model should see a small candidate set, not the entire day.</em></p>
-
-  <p><strong>The remaining work requires judgment:</strong> whether observations reinforce an existing preference, change a project, reveal a workflow or mean nothing durable. <em>This is the difference between collecting history and maintaining memory.</em></p>
+  <p>Remove duplicates, no-ops and automated noise before inference, so the model sees a small candidate set rather than the entire day. Use model judgment to decide whether those candidates reinforce a preference, update project context, reveal a workflow or warrant no lasting memory.</p>
 
   <h3>What dreaming does</h3>
 
@@ -2103,17 +2148,13 @@
   </table>
   </div>
 
-  <p><strong>A stated correction is not another observation. It is an override.</strong> If Maya says, &ldquo;Stop shortening my email subjects,&rdquo; the next dream must not weigh that instruction against twelve earlier acceptances. Explicit memory actions belong in an append-only diary so the same history cannot recreate what the user removed.</p>
-
-  <p><strong>Removal is part of the same pass.</strong> When a source is deleted, a person leaves or a retention window closes, dreaming follows <code>source</code> and <code>derived_from</code> to anything that depended on it. <em>Otherwise the next pass can infer the deleted memory again.</em></p>
-
-  <p>A bad retrieval damages one turn. A bad merge, promotion or inference changes what every later session believes. <strong>Dreaming is where memory becomes smaller &mdash; and where it becomes safe to trust.</strong></p>
+  <p>Consolidation must honor explicit corrections and removals, and follow <code>source</code> and <code>derived_from</code> links to revise or retire dependent memories when supporting evidence is deleted or expires.</p>
 </section>
 
 <section id="delivery">
   <div class="sec-head"><a class="addr-link" href="#delivery"><span class="addr mono">05</span></a><h2>Load by scope, retrieve by need</h2></div>
 
-  <p><strong>Memory is useful before the first tool call.</strong> Root memory and the active application are already known when a session begins, so load them. Keep everything else visible through a compact index and fetch it only when the task crosses into that scope.</p>
+  <p><strong>Memory is useful before the first tool call.</strong> At session start, load the user&rsquo;s general preferences and working context, along with memory scoped to the application they are using. Keep everything else visible through a compact index and fetch it only when the task crosses into that scope.</p>
 
   <p>This is not eager versus lazy retrieval. <strong>It is certainty versus speculation.</strong></p>
   <ol>
@@ -2174,12 +2215,12 @@
         </div>
       </div>
     </div>
-    <figcaption id="fig7-cap"><b>Figure 7 &mdash; one store, different entrypoint views</b></figcaption>
+    <figcaption id="fig7-cap"><b>Figure 8 &mdash; one store, different entrypoint views</b></figcaption>
   </figure>
 
-  <h3>Compaction is a reload boundary</h3>
+  <h3>Reload memory after context compaction</h3>
 
-  <p><strong>Compaction preserves enough conversational state for the session to continue; it does not preserve a memory contract.</strong> Even when a summary retains the fact itself, it may lose fields such as <code>source</code>, <code>assertion</code>, <code>scope</code> and <code>valid</code>. <em>A plausible sentence is not a substitute for the maintained record behind it.</em></p>
+  <p>When a conversation approaches the agent harness&rsquo;s context limit, the harness may compact it into a shorter summary so the session can continue. <strong>That summary can preserve a remembered fact while losing its source, scope or validity.</strong> When rebuilding the context, reload the maintained memory rather than treating the conversation summary as its replacement.</p>
 
   <p>In this design, the <strong>system prompt, tools prompt and memory projection form a frozen prefix</strong> when the context is built. Compaction logic can differ across harnesses. When the harness rebuilds the context, it reads the maintained memory again and injects the current projection rather than relying on memory carried through the summary.</p>
 
@@ -2217,7 +2258,7 @@
       </div>
 
     </div>
-    <figcaption id="fig8-cap"><b>Figure 8 &mdash; the same underspecified question, twice</b>Hop counts are illustrative.</figcaption>
+    <figcaption id="fig8-cap"><b>Figure 9 &mdash; the same underspecified question, twice</b></figcaption>
   </figure>
 
   <p>What memory supplies is a set of <strong>filters, not content</strong>: the entity set to disambiguate against, the vocabulary the organisation actually uses, the recency window that matters, the collaborators worth restricting to, the artifacts already open. Each is a precision gain on a problem that is otherwise recall-bound, and each hop saved is a second of latency and a few thousand tokens of search payload that never enter the window.</p>
@@ -2262,97 +2303,13 @@
     <li>Evaluate usage on real tasks: did those records improve the agent&rsquo;s decisions and reduce unnecessary work?</li>
   </ol>
 
-  <p><em>Production traces show what the system did, but not always what memory it should have formed.</em></p>
-
-  <p>Retrieval benchmarks remain useful, but they <strong>cover only part of the system</strong>. They rarely test concurrent writers, scope promotion, event-bound expiry, access inheritance, deletion propagation or whether memory reduces enterprise-search work. <em>Aggregate accuracy can also hide the tradeoff between recalling more and knowing when not to answer.</em></p>
-
-  <p>What made Maya&rsquo;s Thursday easier was not another copy of the deck. It was the small amount the agents had learned about her work: who reviews margin, which project is winding down, how she structures executive reviews and when she wants a diff instead of a rewrite. If those records reduce work without escaping their scope or surviving past their evidence, memory is helping. <strong>Everything else the organization already knows.</strong></p>
+  <p>Evaluate both the memories the system forms and the work they help agents complete; retrieval accuracy alone does not establish either. Test whether memory reduces unnecessary work while respecting scope, access and expiry &mdash; and whether agents avoid relying on it when the evidence is insufficient.</p>
 </section>
-
-<div class="article-summary-divider">Summary</div>
-
-<figure class="summary-figure" aria-labelledby="fig9-cap">
-  <div class="summary-diagram">
-    <div class="hidden-stack">
-      <div class="hidden-layer layer-agent">
-        <b>Agent work</b>
-        <span>personalized responses &middot; proactive recommendations</span>
-      </div>
-      <div class="hidden-layer layer-delivery">
-        <b>Delivery</b>
-        <span>known context into the frozen prefix &middot; possible context retrieved by need</span>
-      </div>
-      <div class="hidden-layer layer-memory">
-        <b>Thin memory</b>
-        <div class="hidden-memory-content">
-          <div class="scope-tree">
-            <span class="summary-kicker">illustrative scope tree</span>
-            <code>memory/<br>&#9500;&#9472; user/<br>&#9500;&#9472; applications/{app}/<br>&#9500;&#9472; projects/{project}/<br>&#9500;&#9472; teams/{team}/<br>&#9492;&#9472; artifacts/{artifact}/</code>
-          </div>
-          <div class="memory-families">
-            <span class="summary-kicker">within each scope</span>
-            <div class="memory-family org"><b>Organizational</b><span>entities &middot; relationships &middot; decisions &middot; work state</span></div>
-            <div class="memory-family pref"><b>Preference</b><span>choices &middot; communication &middot; format &middot; presentation</span></div>
-            <div class="memory-family workflow"><b>Workflow / procedural</b><span>triggers &middot; steps &middot; handoffs &middot; success signals</span></div>
-          </div>
-          <div class="memory-contract-line">type &middot; source &middot; scope &middot; validity &middot; evidence &middot; lineage</div>
-        </div>
-      </div>
-      <div class="hidden-layer layer-consolidation">
-        <b>Consolidation</b>
-        <div class="consolidation-halves">
-          <div class="consolidation-half">
-            <b>Before the first write</b>
-            <span>observe &middot; prefilter &middot; extract candidate records</span>
-          </div>
-          <div class="consolidation-half">
-            <b><span class="loop-cue">&#8634;</span>With existing memory</b>
-            <span>merge &middot; reinforce &middot; correct &middot; promote &middot; expire &middot; delete</span>
-          </div>
-        </div>
-      </div>
-      <div class="hidden-layer layer-policy">
-        <b>Policy &amp; controls</b>
-        <span>source &middot; scope &middot; validity &middot; evidence &middot; lineage &middot; permissions &middot; retention &middot; deletion</span>
-      </div>
-      <div class="hidden-layer layer-sources">
-        <b>Enterprise sources</b>
-        <div class="source-icons">
-          <span class="source-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
-            Email
-          </span>
-          <span class="source-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
-            Chat
-          </span>
-          <span class="source-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h4"/><path d="M9 12h7M9 16h7"/></svg>
-            Documents
-          </span>
-          <span class="source-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4z"/><path d="M8 3v6M16 3v6M4 10h16"/></svg>
-            Calendar
-          </span>
-          <span class="source-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/></svg>
-            CRM
-          </span>
-          <span class="source-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="m9 11 6-4M9 13l6 4"/></svg>
-            Systems of record
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <figcaption id="fig9-cap"><b>Figure 9 &mdash; the enterprise memory stack</b></figcaption>
-</figure>
 
 </main>
 
 <footer>
-  <h3>Sources</h3>
+  <h3>References</h3>
   <ul class="sources">
     <li><span class="who">Wu et al. &mdash; LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</span><a href="https://arxiv.org/abs/2410.10813" target="_blank" rel="noopener">arXiv:2410.10813</a></li>
     <li><span class="who">Maharana et al. &mdash; Evaluating Very Long-Term Conversational Memory of LLM Agents (LoCoMo)</span><a href="https://aclanthology.org/2024.acl-long.747/" target="_blank" rel="noopener">ACL 2024</a></li>
