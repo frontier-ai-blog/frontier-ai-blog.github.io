@@ -1,0 +1,148 @@
+/* Related-content links shared by every article page.
+   Colors are derived from the surrounding text color so the components fit each article's own palette
+   in both light and dark themes. Link this file last in <head> so it wins ties with article styles. */
+
+.related-inline {
+  margin: 2.25rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid currentColor;
+  background: rgba(127, 127, 127, 0.08);
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+}
+
+.related-inline .related-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.related-inline a {
+  color: inherit;
+  font-size: 1.02rem;
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.18em;
+}
+
+.related-inline a:hover {
+  text-decoration-thickness: 0.12em;
+}
+
+.related-inline p {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.related-reading {
+  margin: 3.5rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(127, 127, 127, 0.35);
+  border-top: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.related-reading.related-reading-flush {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+footer + .related-reading {
+  margin-top: 0;
+}
+
+.related-reading h2 {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.related-reading .related-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.related-reading .related-list li {
+  margin: 0;
+  padding: 0;
+}
+
+.related-reading .related-list li::before {
+  content: none;
+}
+
+.related-reading .related-card {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.1rem 1.15rem 1.2rem;
+  border: 1px solid rgba(127, 127, 127, 0.3);
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.related-reading .related-card:hover,
+.related-reading .related-card:focus-visible {
+  border-color: currentColor;
+  background: rgba(127, 127, 127, 0.06);
+  background: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.related-reading .related-meta {
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.related-reading .related-title {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.12rem;
+  line-height: 1.25;
+}
+
+.related-reading .related-summary {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.related-reading .related-all {
+  margin: 1.25rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.related-reading .related-all a {
+  color: inherit;
+}
+
+@media print {
+  .related-inline,
+  .related-reading {
+    break-inside: avoid;
+  }
+}

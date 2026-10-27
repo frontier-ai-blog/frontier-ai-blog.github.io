@@ -463,9 +463,21 @@
         width: min(100% - 1.5rem, 84rem);
       }
 
+      .header-inner {
+        gap: 1rem;
+      }
+
       .brand {
         gap: 0.45rem;
         font-size: 0.88rem;
+      }
+
+      .site-nav {
+        gap: 0.9rem;
+      }
+
+      .site-nav a {
+        font-size: 0.84rem;
       }
 
       .team-roster {
@@ -518,6 +530,14 @@
       .brand-team {
         display: none;
       }
+
+      .site-nav {
+        gap: 0.7rem;
+      }
+
+      .site-nav a {
+        font-size: 0.8rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -544,7 +564,8 @@
         <span class="brand-team">Frontier AI for Office Science</span>
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="index.html">Blog</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#blog">Blog</a>
         <a href="team.html" aria-current="page">Team</a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
           <span class="theme-dot" aria-hidden="true"></span>

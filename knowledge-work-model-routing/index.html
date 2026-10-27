@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    let savedTheme = null;
+    try {
+      savedTheme = localStorage.getItem("frontier-theme");
+    } catch {}
+    const theme = param === "dark" || param === "light"
+      ? param
+      : savedTheme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Mukul Singh">
+<link rel="icon" type="image/svg+xml" href="../assets/copilot-favicon.svg">
+<link rel="canonical" href="https://frontier-ai-blog.github.io/knowledge-work-model-routing/">
+<meta name="description" content="A lightweight router that sends routine tasks to a small model and hard tasks to a frontier model came within 10 ELO points of the top GDPval-AA entry at much lower cost.">
+<title>Routing Knowledge Work Between Small and Frontier Models | Frontier AI for Office Science</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --accent: #0078d4;
+    --accent-dark: #005a9e;
+    --accent-light: #deecf9;
+    --green: #107c10;
+    --green-light: #dff6dd;
+    --orange: #ca5010;
+    --orange-light: #fff4ce;
+    --purple: #5c2d91;
+    --purple-light: #f3e8ff;
+    --border: #e5e7eb;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero ───────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #0a1628 0%, #0f2847 40%, #0d3868 100%);
+    color: white;
+    padding: 80px 24px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,120,212,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(16,124,16,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,120,212,0.2);
+    border: 1px solid rgba(0,120,212,0.3);
+    color: #7ec8f8;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #60a5fa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.72);
+    max-width: 620px;
+    line-height: 1.65;
+  }
+  /* ── Article Body ──────────────────── */
+  .article {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .article h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .article h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 36px 0 12px;
+    color: var(--text);
+  }
+  .article p {
+    margin-bottom: 18px;
+    font-size: 16.5px;
+    color: #374151;
+  }
+  .article a { color: var(--accent); text-decoration: none; }
+  .article a:hover { text-decoration: underline; }
+
+  /* ── Callout boxes ─────────────────── */
+  .callout {
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout.thesis {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+  }
+  .callout.thesis .label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent-dark);
+    margin-bottom: 8px;
+  }
+  .callout.thesis p { color: #1e3a5f; margin-bottom: 0; font-size: 15.5px; }
+  .callout.insight {
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+  }
+  .callout.insight .label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .callout.insight p { color: #14532d; margin-bottom: 0; }
+  .callout.warn {
+    background: var(--orange-light);
+    border-left: 4px solid var(--orange);
+  }
+  .callout.warn .label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .callout.warn p { color: #78350f; margin-bottom: 0; }
+
+  /* ── Data tables ───────────────────── */
+  .data-table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .data-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .data-table-wrap th {
+    background: #f6f8fa;
+    font-weight: 600;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  .data-table-wrap td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .data-table-wrap tr:last-child td { border-bottom: none; }
+  .data-table-wrap .highlight-row { background: #f0fff4; font-weight: 600; }
+  .data-table-wrap .dim { color: var(--muted); }
+  .data-table-wrap .green { color: var(--green); font-weight: 600; }
+  .data-table-wrap .orange { color: var(--orange); font-weight: 600; }
+
+  .table-caption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── Comparison cards ──────────────── */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .comp-card .persona {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .comp-card .persona-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .comp-card .persona-icon.dev { background: #ede9fe; }
+  .comp-card .persona-icon.kw { background: var(--accent-light); }
+  .comp-card .persona h4 { font-size: 16px; font-weight: 700; }
+  .comp-card .persona span { font-size: 12px; color: var(--muted); }
+  .comp-card ul {
+    list-style: none;
+    font-size: 14px;
+  }
+  .comp-card ul li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    color: #374151;
+  }
+  .comp-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .comp-card.dev ul li::before { background: #8b5cf6; }
+  .comp-card.kw ul li::before { background: var(--accent); }
+
+  /* ── KPI strip ─────────────────────── */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+  .kpi-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .kpi-item .value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+  }
+  .kpi-item .value.accent { color: var(--accent); }
+  .kpi-item .value.orange { color: var(--orange); }
+  .kpi-item .label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  /* ── Pipeline diagram (linear) ───────── */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 32px 0;
+    font-size: 14px;
+  }
+  .pipeline .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .pipeline .step .step-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .pipeline .step .step-value {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .pipeline .arrow {
+    font-size: 24px;
+    color: #d1d5db;
+    padding: 0 6px;
+  }
+
+  /* ── Router diagram (rows) ──────────── */
+  .router-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+  .router-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+  }
+  .router-row + .router-row { border-top: 1px dashed var(--border); }
+  .router-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .tag.task  { background: #dbeafe; color: #1e40af; }
+  .tag.nano  { background: var(--orange-light); color: #92400e; }
+  .tag.mini  { background: var(--green-light); color: #065f46; }
+  .tag.front { background: var(--purple-light); color: var(--purple); }
+  .tag.pct   { background: #f3f4f6; color: var(--muted); font-weight: 600; }
+  .router-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
+
+  /* ── Pull quote ────────────────────── */
+  .pull-quote {
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    margin: 36px 0;
+    background: #f9fbff;
+    border-radius: 0 8px 8px 0;
+  }
+  .pull-quote p {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* ── Numbered list ─────────────────── */
+  .numbered-insights {
+    list-style: none;
+    counter-reset: insights;
+    margin: 24px 0;
+  }
+  .numbered-insights li {
+    counter-increment: insights;
+    padding: 16px 20px 16px 60px;
+    position: relative;
+    margin-bottom: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  .numbered-insights li::before {
+    content: counter(insights);
+    position: absolute;
+    left: 18px;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .numbered-insights li strong { color: var(--text); }
+
+  /* ── Footer ────────────────────────── */
+  .article-footer {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .article-footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ── Top nav bar ─────────────────────────── */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.2s;
+  }
+  .back-link:hover {
+    background: rgba(255,255,255,0.15);
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.2);
+  }
+  .back-link svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .top-nav-title {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Responsive ────────────────────── */
+  @media (max-width: 640px) {
+    .hero { padding: 48px 18px 40px; }
+    .article { padding: 32px 18px 60px; }
+    .pipeline { flex-direction: column; gap: 8px; }
+    .pipeline .arrow { transform: rotate(90deg); }
+    .kpi-strip { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .top-nav-title { display: none; }
+  }
+</style>
+<link rel="stylesheet" href="../articles/semantic-article-theme.css">
+<link rel="stylesheet" href="../articles/related-reading.css">
+</head>
+<body>
+
+<!-- ═══ Top Nav ════════════════════════════════════════════════ -->
+<header class="article-site-header">
+  <div class="top-nav">
+    <a class="top-nav-title" href="../index.html">Frontier AI for Office Science</a>
+    <nav class="top-nav-links" aria-label="Primary navigation">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#blog">Blog</a>
+      <a href="../team.html">Team</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+        <span class="theme-dot" aria-hidden="true"></span>
+        <span class="theme-label" data-theme-label>Dark</span>
+      </button>
+    </nav>
+  </div>
+  <div class="back-row">
+    <a href="../index.html" class="back-link">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Homepage
+    </a>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Models and Efficiency &middot; August 25, 2026</div>
+    <h1>Routing Knowledge Work Between Small and Frontier Models</h1>
+    <p class="subtitle">Unlike developers, knowledge workers don't push models to their limits. For their work, small language models paired with intelligent routing deliver better results at a fraction of the cost, and this architecture scales.</p>
+    <p class="byline"><strong>Mukul Singh</strong> &middot; Director of Science &middot; <time datetime="2026-08-25">August 25, 2026</time></p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ ARTICLE ═══ -->
+<div class="article">
+
+  <!-- ── Section 1: The Problem ──────────── -->
+  <h2>How Knowledge Workers Differ From Developers</h2>
+
+  <p>The AI industry optimizes for developers. Frontier models are benchmarked on code generation, competitive math, and multi-step agentic reasoning: tasks where raw capability is the bottleneck and cost is secondary. That makes sense for developers: they write novel code, debug complex systems, and need the model to think as hard as possible.</p>
+
+  <p>But knowledge workers (the hundreds of millions of people in spreadsheets, email, and documents every day) have structured, domain-specific tasks where <strong>speed and cost matter more than ceiling capability</strong>. They draft reports, build trackers, write formulas. The ceiling on most of these tasks is set by context, speed, and reliability rather than by model intelligence.</p>
+
+  <p>This distinction has large economic consequences. If 80% of knowledge-worker requests can be served by a model that costs 10× less and responds 2× faster, then defaulting every request to a frontier model adds cost and latency to most of them without a meaningful quality gain.</p>
+
+  <div class="callout thesis">
+    <div class="label">Core Thesis</div>
+    <p>Most knowledge-worker tasks sit well within the capability of small, domain-tuned models. The right architecture <strong>always uses the right model</strong>, selected automatically by a lightweight router, instead of defaulting to the best model.</p>
+  </div>
+
+  <!-- ── Section 2: The Proof ────────────── -->
+  <h2>A Nano Router Ranks #2 on GDPVal</h2>
+
+  <p><a href="https://arxiv.org/abs/2510.04374" target="_blank">GDPVal</a> is OpenAI's benchmark for real-world knowledge work: 220 tasks across 44 occupations (accountants, financial managers, engineers, clerks), each graded by human experts against professional deliverables. The <a href="https://artificialanalysis.ai" target="_blank">GDPval-AA leaderboard</a> by Artificial Analysis ranks 368 model configurations on these tasks.</p>
+
+  <p>We built a nano-model-based router that classifies each task with a sub-cent nano-class model and dispatches to either GPT-5.5 (for hard tasks) or GPT-5.4 Mini (for everything else). It reaches <strong>#2 overall</strong>:</p>
+
+  <div class="data-table-wrap">
+    <table>
+      <tr><th>#</th><th>Model</th><th>ELO</th><th>Class</th></tr>
+      <tr><td>1</td><td>GPT-5.5 (xhigh)</td><td>1769</td><td>Frontier</td></tr>
+      <tr class="highlight-row"><td>2</td><td><strong>Nano-Routed (GPT-5.5 + GPT-5.4 Mini)</strong></td><td><strong>1759</strong></td><td class="green"><strong>Router</strong></td></tr>
+      <tr><td>3</td><td>Claude Opus 4.7 (max)</td><td>1753</td><td>Frontier</td></tr>
+      <tr><td>4</td><td>Claude Sonnet 4.6 (max)</td><td>1676</td><td>Frontier</td></tr>
+      <tr><td>5</td><td>GPT-5.4 (xhigh)</td><td>1674</td><td>Frontier</td></tr>
+      <tr><td>6</td><td>MiMo-V2.5-Pro</td><td>1571</td><td>Mid-tier</td></tr>
+      <tr><td>7</td><td>DeepSeek V4 Pro (Max)</td><td>1554</td><td>Mid-tier</td></tr>
+      <tr><td>14</td><td>GPT-5.4 mini (xhigh)</td><td>1417</td><td class="green">Small</td></tr>
+      <tr><td>19</td><td>Gemini Flash</td><td>1197</td><td class="green">Small</td></tr>
+    </table>
+  </div>
+  <p class="table-caption">GDPval-AA ELO Leaderboard (selected, June 2026). Source: <a href="https://artificialanalysis.ai" target="_blank">Artificial Analysis</a>.</p>
+
+  <p>GPT-5.4 Mini alone scores 1417. GPT-5.5 alone scores 1769. The nano-routed combination lands at 1759, <strong>within 10 points of pure frontier</strong>, by using the cheap model wherever it's good enough and the expensive one only where it matters. It beats Claude Opus 4.7 and every other single-model entry. The cost difference between GPT-5.5 and GPT-5.4 Mini is over 10×, but the routed quality loss is just 10 ELO points.</p>
+
+  <p>The architecture is simple:</p>
+
+  <div class="router-box">
+    <div class="router-row">
+      <span class="router-cell"><span class="tag task">Task</span> User request arrives</span>
+      <span class="router-arrow">→</span>
+      <span class="router-cell"><span class="tag nano">Nano Classifier</span> &lt;$0.01</span>
+    </div>
+    <div class="router-row">
+      <span class="router-cell"><span class="tag pct">70% to 85%</span> Easy / routine</span>
+      <span class="router-arrow">→</span>
+      <span class="router-cell"><span class="tag mini">GPT-5.4 Mini</span> Fast &amp; cheap</span>
+    </div>
+    <div class="router-row">
+      <span class="router-cell"><span class="tag pct">15% to 30%</span> Complex / novel</span>
+      <span class="router-arrow">→</span>
+      <span class="router-cell"><span class="tag front">GPT-5.5</span> Frontier</span>
+    </div>
+  </div>
+
+  <p>The classifier locks the model for the session, so there are no mid-session swaps that would break prompt caches or produce inconsistent output. Total routing overhead is less than $0.01 per request. The routed system delivers near-frontier quality at a fraction of frontier cost.</p>
+
+  <!-- ── Section 3: Why It Works ──────────── -->
+  <h2>Why This Works for Knowledge Workers</h2>
+
+  <p>Routing exploits three structural properties of knowledge work that don't hold for software engineering:</p>
+
+  <ol class="numbered-insights">
+    <li><strong>Bounded action spaces.</strong> Knowledge workers operate within applications, where the set of possible actions (write a formula, format a range, draft a paragraph) is finite and well-defined. A smaller model trained on that space is faster, cheaper, and often more reliable than a frontier model with more degrees of freedom to go wrong.</li>
+    <li><strong>Steep difficulty distribution.</strong> On GDPVal, quality scores are bimodal: 17 of 62 spreadsheet tasks scored ≥95%, while 12 scored below 5%. Most requests are routine. A router sends the easy majority (70% to 85%) to cheap models and reserves frontier for the genuinely hard tail.</li>
+    <li><strong>Latency sensitivity.</strong> Knowledge workers are interactive. A 2-minute response time hurts adoption. Smaller models respond in seconds, not minutes. On GDPVal, median task time is 110 seconds with frontier; smaller models cut this substantially.</li>
+  </ol>
+
+  <p>For developers, the calculus is different: the difficulty distribution is flatter, the action space is unbounded, and the cost of errors compounds through testing and deployment. Frontier models still deliver positive ROI for code. But <strong>knowledge workers are not developers</strong>, and shouldn't be treated as if they are.</p>
+
+  <aside class="related-inline" aria-label="Related article">
+    <span class="related-label">Related reading</span>
+    <a href="../code-dsls-vs-json-tool-calling/">Code DSLs Versus JSON Tool Calling in Multi-Step Agent Workflows</a>
+    <p>Interface design is another lever on cost and latency: typed code DSLs cut tokens and turns in multi-step workflows.</p>
+  </aside>
+
+  <!-- ── Section 4: Hill-Climbing SLMs ─────── -->
+  <h2>Hill-Climbing: Making Small Models Better</h2>
+
+  <p>Routing off-the-shelf models is step one. Step two is <strong>making small models better through targeted post-training</strong>, which Microsoft calls <a href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank">"hill-climbing"</a>: a repeatable system of distillation, reinforcement learning, and domain adaptation that pushes a model's capability higher with each cycle, trained from scratch on clean data without distillation from third-party models.</p>
+
+  <p>The recent <a href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank">MAI model release</a> (June 2, 2026) provides concrete proof that this approach works. Microsoft launched seven models spanning ultra-efficient to frontier-class:</p>
+
+  <div class="data-table-wrap">
+    <table>
+      <tr><th>Model</th><th>Size</th><th>Key Result</th><th>Efficiency</th></tr>
+      <tr><td><a href="https://microsoft.ai/news/introducing-mai-thinking-1/" target="_blank">MAI-Thinking-1</a></td><td>35B active / ~1T MoE</td><td>Matches Opus 4.6 on SWE-Bench Pro; 97% AIME 2025</td><td>Medium footprint, frontier reasoning</td></tr>
+      <tr><td><a href="https://microsoft.ai/news/introducingmai-code-1-flash/" target="_blank">MAI-Code-1-Flash</a></td><td>~5B active</td><td>Beats Haiku 4.5 on all coding benchmarks; +16pp on SWE-Bench Pro</td><td class="green">60% fewer tokens than Haiku</td></tr>
+      <tr><td>MAI Frontier-Tuned (Excel)</td><td>Small</td><td>Matches GPT-5.4 on spreadsheet tasks</td><td class="green">Up to 10× more efficient</td></tr>
+    </table>
+  </div>
+  <p class="table-caption">Selected MAI models (June 2026). All trained from scratch on clean, licensed data without third-party distillation. Sources: <a href="https://microsoft.ai/news/introducing-mai-thinking-1/" target="_blank">MAI-Thinking-1</a>, <a href="https://microsoft.ai/news/introducingmai-code-1-flash/" target="_blank">MAI-Code-1-Flash</a>, <a href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank">MAI blog</a>.</p>
+
+  <p><strong>MAI-Code-1-Flash</strong> is the most relevant model for the routing thesis. At just ~5B active parameters (comparable to Haiku), it outperforms Claude Haiku 4.5 on every coding benchmark tested, including a +16-point lead on SWE-Bench Pro (51.2% vs. 35.2%), while using up to 60% fewer tokens. It ships inside GitHub Copilot's auto-picker, where a router selects it for tasks where its efficiency-to-quality ratio beats larger models. It follows the pattern this article argues for: a small, purpose-built model paired with intelligent routing.</p>
+
+  <p><strong>MAI-Thinking-1</strong>, at 35B active parameters (sparse MoE), matches Claude Opus 4.6 on SWE-Bench Pro and scores 97% on AIME 2025. These results show that a medium-sized model can reach frontier reasoning when trained with the right methodology. Human evaluators preferred it over Sonnet 4.6 in blind side-by-side comparisons across 1,276 tasks.</p>
+
+  <p>On the knowledge-worker side, Microsoft's <a href="https://devblogs.microsoft.com/microsoft365dev/frontier-tuning-teaching-ai-to-work-the-way-you-do/" target="_blank">Frontier Tuning</a> adapts MAI models to specific workflows using reinforcement learning in real execution environments. A Frontier-Tuned MAI model for Excel <a href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank">matches GPT-5.4 while being up to 10× more efficient</a>. The same public announcement reports that a Frontier-Tuned model achieved the highest win rate of any model tested at roughly 10× lower cost when tuned for a market-leading organization's enterprise standards.</p>
+
+  <p>On GDPVal's knowledge-worker tasks, a post-trained small model doesn't need to reach the absolute top of the leaderboard. It just needs to reach the range where quality is indistinguishable for the majority of tasks, and a router handles the rest. The MAI release shows this happening in coding (Code-1-Flash), reasoning (Thinking-1), and productivity (Frontier-Tuned Excel), with the same hill-climbing approach applied in each domain.</p>
+
+  <aside class="related-inline" aria-label="Related article">
+    <span class="related-label">Related reading</span>
+    <a href="../executable-agent-memory/">Persistent, Executable Memory for AI Agents</a>
+    <p>Memory built by a larger model can also raise the accuracy of smaller models without retraining.</p>
+  </aside>
+
+  <div class="callout insight">
+    <div class="label">Key Result</div>
+    <p>The MAI model family demonstrates that small-to-medium models, trained from scratch with hill-climbing methodology, can match or beat frontier alternatives at <strong>up to 10× lower cost</strong>. MAI-Code-1-Flash (~5B active) beats Haiku 4.5 on all coding benchmarks with 60% fewer tokens. A Frontier-Tuned MAI model for Excel matches GPT-5.4 at 10× lower inference cost. Combined with routing, these models become the efficient backbone that delivers near-frontier quality at a fraction of the price.</p>
+  </div>
+
+  <!-- ── Section 5: Implications ──────────── -->
+  <h2>Implications</h2>
+
+  <ol class="numbered-insights">
+    <li><strong>Default to routing, not to frontier.</strong> A nano router reaches #2 on GDPVal. The classifier cost is negligible; the savings are 75% to 90%. Every AI surface serving knowledge workers should ship a model router.</li>
+    <li><strong>Invest in post-trained SLMs.</strong> Distilled, RL-tuned small models close the quality gap to &lt;2pp at 10× lower inference cost. The pipeline is reproducible and already in production.</li>
+    <li><strong>Reserve frontier for the hard tail.</strong> Only 5% to 15% of knowledge-worker tasks need frontier capability. Route the rest to efficient models; the GDPVal data shows the quality holds.</li>
+    <li><strong>Measure ROI alongside benchmarks.</strong> A model that scores 10 ELO points lower but costs 10× less is the right choice for 80% of tasks. The correct metric is "which model delivers the most value per dollar for this task," rather than "which model is best."</li>
+  </ol>
+
+  <div class="callout thesis">
+    <div class="label">Summary</div>
+    <p>Knowledge workers are best served by the <strong>right</strong> model for the <strong>right</strong> task rather than a frontier model on every request. Routing + domain-tuned SLMs delivers 75% to 90% cost reduction, 2× to 3× latency improvement, and quality within 10 ELO points of pure frontier. This architecture scales AI to a billion knowledge workers by choosing the right model <em>automatically</em>.</p>
+  </div>
+
+  <div class="article-footer">
+    <p><a href="https://arxiv.org/abs/2510.04374">GDPVal (arXiv:2510.04374)</a> &middot; <a href="https://artificialanalysis.ai">GDPval-AA Leaderboard</a> &middot; <a href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/">MAI Model Family</a></p>
+  </div>
+
+  <aside class="related-reading" aria-labelledby="related-reading-title">
+    <h2 id="related-reading-title">Related reading</h2>
+    <ul class="related-list">
+      <li>
+        <a class="related-card" href="../code-dsls-vs-json-tool-calling/">
+          <span class="related-meta">Tools and Interfaces &middot; September 22, 2026</span>
+          <span class="related-title">Code DSLs Versus JSON Tool Calling in Multi-Step Agent Workflows</span>
+          <span class="related-summary">A controlled comparison in which typed code DSLs used 76% fewer tokens and 48% fewer turns than JSON tool calling, with MCP kept as the transport layer.</span>
+        </a>
+      </li>
+      <li>
+        <a class="related-card" href="../executable-agent-memory/">
+          <span class="related-meta">Memory and Context &middot; September 8, 2026</span>
+          <span class="related-title">Persistent, Executable Memory for AI Agents</span>
+          <span class="related-summary">Giving agents a code repository they can read, write, and reorganize improved accuracy, cut reasoning steps, and transferred across models.</span>
+        </a>
+      </li>
+      <li>
+        <a class="related-card" href="../semantic-intent-and-execution/">
+          <span class="related-meta">Agent Architecture &middot; October 6, 2026</span>
+          <span class="related-title">Separating Semantic Intent from Execution in Knowledge-Work Agents</span>
+          <span class="related-summary">Keeping judgment in the core agent loop while delegated runtimes handle the mechanics of building documents, spreadsheets, and slides.</span>
+        </a>
+      </li>
+    </ul>
+    <p class="related-all"><a href="../index.html#blog">Browse all articles</a></p>
+  </aside>
+
+</div>
+
+<script src="../articles/semantic-article-theme.js"></script>
+</body>
+</html>

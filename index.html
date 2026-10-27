@@ -16,10 +16,11 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Frontier AI for Office Science shares research and engineering insights behind Microsoft Copilot.">
+  <meta name="description" content="The Frontier AI team inside Microsoft Office works on Copilot. Read our research on agent architecture, memory, tools, and models for knowledge work.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/svg+xml" href="assets/copilot-favicon.svg">
-  <title>Frontier AI for Office Science | Blog</title>
+  <link rel="canonical" href="https://frontier-ai-blog.github.io/">
+  <title>Frontier AI for Office Science | Copilot research from Microsoft Office</title>
   <style>
     :root {
       color-scheme: light;
@@ -292,9 +293,9 @@
     h1 {
       grid-column: 1;
       grid-row: 2 / span 2;
-      max-width: 15ch;
+      max-width: 18ch;
       margin-bottom: 0;
-      font-size: clamp(2.35rem, 3.3vw, 3.25rem);
+      font-size: clamp(2.5rem, 4.6vw, 4.25rem);
       font-weight: 600;
       line-height: 0.98;
       letter-spacing: 0;
@@ -348,24 +349,35 @@
       background: var(--cp-surface);
     }
 
-    .intro,
-    .team {
-      padding-block: clamp(5rem, 9vw, 9rem);
+    .about,
+    .story,
+    .team-cta {
+      padding-block: clamp(3.5rem, 7vw, 6.5rem);
+      border-bottom: 1px solid var(--cp-border);
     }
 
-    .intro {
+    .about {
       background: var(--cp-bg-elevated);
     }
 
-    .intro-grid {
+    .story {
+      background: var(--cp-surface);
+    }
+
+    .team-cta {
+      background: var(--cp-bg);
+    }
+
+    .about-grid,
+    .story-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(17rem, 0.7fr);
-      gap: clamp(3rem, 8vw, 8rem);
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(2rem, 7vw, 7rem);
       align-items: start;
     }
 
     .section-label {
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
       color: var(--cp-text-muted);
       font-size: 0.78rem;
       font-weight: 700;
@@ -373,137 +385,207 @@
       text-transform: uppercase;
     }
 
-    .intro-statement {
-      max-width: 21ch;
+    .section-title {
+      max-width: 18ch;
       margin-bottom: 0;
-      font-size: clamp(2.2rem, 5vw, 4.7rem);
-      font-weight: 500;
-      line-height: 1.05;
+      font-size: clamp(1.85rem, 3.2vw, 2.85rem);
+      font-weight: 540;
+      line-height: 1.04;
       letter-spacing: 0;
     }
 
-    .principles {
+    .about-copy p,
+    .story-copy p {
+      max-width: 40rem;
+      margin-bottom: 1.1rem;
+      color: var(--cp-text-muted);
+      font-size: clamp(1rem, 1.3vw, 1.1rem);
+      line-height: 1.65;
+    }
+
+    .story-copy p:first-child {
+      color: var(--cp-text);
+      font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+      line-height: 1.5;
+    }
+
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 40rem;
+      margin: 1.75rem 0 0;
       border-top: 1px solid var(--cp-border-strong);
     }
 
-    .principle {
-      display: grid;
-      grid-template-columns: 2.5rem 1fr;
-      gap: 1rem;
-      padding-block: 1.25rem;
-      border-bottom: 1px solid var(--cp-border);
+    .about-facts div {
+      padding: 0.9rem 1rem 0 0;
     }
 
-    .principle-number {
-      color: var(--cp-accent);
-      font-family: Consolas, "Courier New", Courier, monospace;
+    .about-facts div + div {
+      padding-left: 1rem;
+      border-left: 1px solid var(--cp-border);
+    }
+
+    .about-facts dt {
+      color: var(--cp-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .about-facts dd {
+      margin: 0.2rem 0 0;
+      font-weight: 600;
+    }
+
+    .areas {
+      margin-top: clamp(3rem, 6vw, 5rem);
+    }
+
+    .areas-title {
+      margin-bottom: 1rem;
+      color: var(--cp-text-muted);
       font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
-    .principle h3 {
-      margin-bottom: 0.35rem;
-      font-size: 1rem;
-      font-weight: 650;
-    }
-
-    .principle p {
-      margin-bottom: 0;
-      color: var(--cp-text-muted);
-      font-size: 0.92rem;
-    }
-
-    .team {
-      border-top: 1px solid var(--cp-border);
-      border-bottom: 1px solid var(--cp-border);
-      background: var(--cp-bg);
-    }
-
-    .section-heading-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.62fr);
-      gap: clamp(2rem, 8vw, 8rem);
-      align-items: end;
-      margin-bottom: clamp(3rem, 6vw, 5.5rem);
-    }
-
-    .section-heading-row h2 {
-      max-width: 12ch;
-      margin-bottom: 0;
-      font-size: clamp(2.8rem, 7vw, 6.5rem);
-      font-weight: 540;
-      line-height: 0.95;
-      letter-spacing: 0;
-    }
-
-    .section-heading-row p {
-      margin-bottom: 0.25rem;
-      color: var(--cp-text-muted);
-      font-size: 1.05rem;
-    }
-
-    .team-photo {
-      position: relative;
-      min-height: 28rem;
-      margin-bottom: clamp(3rem, 6vw, 5.5rem);
-      overflow: hidden;
-      border-radius: 0.625rem;
-      background: var(--cp-surface-soft);
-    }
-
-    .team-photo img {
-      width: 100%;
-      height: 100%;
-      min-height: 28rem;
-      object-fit: cover;
-      object-position: center 45%;
-      filter: grayscale(100%);
-      transition: filter 400ms ease, transform 700ms ease;
-    }
-
-    .team-photo:hover img {
-      filter: grayscale(25%);
-      transform: scale(1.015);
-    }
-
-    .team-groups {
+    .area-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       border-top: 1px solid var(--cp-border-strong);
     }
 
-    .team-group {
+    .area-card {
       min-height: 13rem;
-      padding: 1.4rem 1.5rem 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.4rem 1.5rem 1.5rem;
       border-bottom: 1px solid var(--cp-border);
+      transition: background 160ms ease;
     }
 
-    .team-group + .team-group {
-      padding-left: 1.5rem;
+    .area-card + .area-card {
       border-left: 1px solid var(--cp-border);
     }
 
-    .team-group-number {
-      display: block;
-      margin-bottom: 3rem;
+    .area-card:hover {
+      background: var(--cp-surface-soft);
+    }
+
+    .area-number {
+      margin-bottom: 1.25rem;
       color: var(--cp-accent);
       font-family: Consolas, "Courier New", Courier, monospace;
       font-size: 0.78rem;
     }
 
-    .team-group h3 {
-      margin-bottom: 0.55rem;
+    .area-card h4 {
+      margin: 0;
       font-size: 1.2rem;
       font-weight: 650;
+      line-height: 1.25;
     }
 
-    .team-group p {
-      margin-bottom: 0;
+    .area-card p {
+      margin: 0;
       color: var(--cp-text-muted);
       font-size: 0.92rem;
     }
 
+    .area-link {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 650;
+    }
+
+    .team-cta-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: center;
+    }
+
+    .team-cta-copy {
+      max-width: 32rem;
+      margin: 1.25rem 0 1.75rem;
+      color: var(--cp-text-muted);
+      font-size: 1.05rem;
+    }
+
+    .team-faces {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .team-faces img {
+      width: 4.75rem;
+      height: 4.75rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 50%;
+      background: var(--cp-surface-soft);
+      object-fit: cover;
+    }
+
+    .category-filter {
+      width: min(100%, 56rem);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 0 auto 1.25rem;
+    }
+
+    .category-chip {
+      min-height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .category-chip:hover {
+      border-color: var(--cp-text);
+      color: var(--cp-text);
+    }
+
+    .category-chip[aria-pressed="true"] {
+      border-color: var(--cp-text);
+      background: var(--cp-text);
+      color: var(--cp-surface);
+    }
+
+    .chip-count {
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    .blog-intro {
+      max-width: 26rem;
+      margin: 0 0 0.25rem;
+      color: var(--cp-text-muted);
+      font-size: 1.05rem;
+    }
+
     .blog {
-      padding-block: clamp(2rem, 3vw, 3rem);
+      padding-block: clamp(3.5rem, 7vw, 6.5rem);
+      border-bottom: 1px solid var(--cp-border);
       background: var(--cp-surface);
     }
 
@@ -517,7 +599,7 @@
 
     .blog-header h2 {
       margin-bottom: 0;
-      font-size: clamp(2.2rem, 5vw, 4.75rem);
+      font-size: clamp(1.85rem, 3.2vw, 2.85rem);
       font-weight: 540;
       line-height: 0.95;
       letter-spacing: 0;
@@ -612,6 +694,7 @@
     }
 
     .post {
+      position: relative;
       display: grid;
       grid-template-columns: 9rem minmax(0, 1fr) minmax(15rem, 0.52fr) 2rem;
       gap: clamp(1.25rem, 3vw, 3.5rem);
@@ -650,6 +733,24 @@
 
     .post h3 a:hover {
       color: var(--cp-text-muted);
+    }
+
+    /* Stretch the title link over the whole card so any click on the card opens the article. */
+    .post h3 a::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+    }
+
+    .post h3 a:focus-visible {
+      outline: none;
+    }
+
+    .post h3 a:focus-visible::after {
+      outline: 3px solid var(--cp-text);
+      outline-offset: -3px;
     }
 
     .post-summary {
@@ -694,6 +795,11 @@
       border: 1px solid var(--cp-border);
       border-radius: 0.625rem;
       background: var(--cp-surface);
+    }
+
+    .post-list[data-view="grid"] .post h3,
+    .post-list[data-view="grid"] .post h3 a {
+      border-radius: inherit;
     }
 
     .post-list[data-view="grid"] .post:hover {
@@ -824,12 +930,11 @@
     }
 
     @media (max-width: 64rem) {
-      .team-groups {
+      .area-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .team-group:nth-child(3) {
-        padding-left: 0;
+      .area-card:nth-child(3) {
         border-left: 0;
       }
 
@@ -929,35 +1034,45 @@
         margin: 0.25rem 0 0;
       }
 
-      .intro-grid,
-      .section-heading-row {
+      .about-grid,
+      .story-grid,
+      .team-cta-inner {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 1.75rem;
       }
 
-      .team-photo,
-      .team-photo img {
-        min-height: 22rem;
-      }
-
-      .team-photo img {
-        object-position: 58% center;
-      }
-
-      .team-groups {
+      .about-facts {
         grid-template-columns: 1fr;
       }
 
-      .team-group,
-      .team-group + .team-group,
-      .team-group:nth-child(3) {
+      .about-facts div,
+      .about-facts div + div {
+        padding: 0.8rem 0;
+        border-left: 0;
+      }
+
+      .about-facts div + div {
+        border-top: 1px solid var(--cp-border);
+      }
+
+      .area-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .area-card,
+      .area-card + .area-card,
+      .area-card:nth-child(3) {
         min-height: 0;
         padding: 1.25rem 0 1.5rem;
         border-left: 0;
       }
 
-      .team-group-number {
-        margin-bottom: 1.5rem;
+      .area-number {
+        margin-bottom: 0.75rem;
+      }
+
+      .team-faces {
+        justify-content: flex-start;
       }
 
       .blog-header {
@@ -1070,7 +1185,8 @@
         <span class="brand-team">Frontier AI for Office Science</span>
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="index.html" aria-current="page">Blog</a>
+        <a href="#about">About</a>
+        <a href="#blog">Blog</a>
         <a href="team.html">Team</a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
           <span class="theme-dot" aria-hidden="true"></span>
@@ -1083,96 +1199,65 @@
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-content reveal">
-        <p class="eyebrow">Microsoft Copilot research</p>
-        <h1 id="hero-title">Frontier AI Blog</h1>
+        <p class="eyebrow">Frontier AI &middot; Microsoft Office</p>
+        <h1 id="hero-title">Advancing the science behind Microsoft Copilot.</h1>
         <p class="hero-copy">
-          We study and build frontier AI systems for Microsoft Copilot, sharing what we learn about agents, knowledge work, and reliable human-AI collaboration.
+          We are the Frontier AI team inside Microsoft Office, and we work on Copilot. We study how AI agents can take on real knowledge work in documents, spreadsheets, presentations, and email, and we publish what we learn here.
         </p>
+        <div class="hero-links">
+          <a class="button" href="#blog">Read the blog</a>
+          <a class="button button-secondary" href="#about">About the team</a>
+        </div>
       </div>
     </section>
 
-    <section class="intro" aria-labelledby="intro-title" hidden>
-      <div class="section-inner intro-grid">
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="section-inner about-grid">
         <div class="reveal">
-          <p class="section-label">Our focus</p>
-          <h2 class="intro-statement" id="intro-title">Advancing the frontier, responsibly and usefully.</h2>
+          <p class="section-label">About us</p>
+          <h2 class="section-title" id="about-title">A research and engineering team inside Microsoft Office.</h2>
         </div>
-        <div class="principles reveal">
-          <article class="principle">
-            <span class="principle-number">01</span>
-            <div>
-              <h3>Capability</h3>
-              <p>Explore new model architectures, learning methods, and intelligent systems.</p>
-            </div>
-          </article>
-          <article class="principle">
-            <span class="principle-number">02</span>
-            <div>
-              <h3>Reliability</h3>
-              <p>Make advanced systems measurable, dependable, and ready for real-world use.</p>
-            </div>
-          </article>
-          <article class="principle">
-            <span class="principle-number">03</span>
-            <div>
-              <h3>Impact</h3>
-              <p>Translate research into tools that help people learn, create, and solve hard problems.</p>
-            </div>
-          </article>
+        <div class="about-copy reveal">
+          <p>Frontier AI is part of Microsoft Office. We are researchers, engineers, and product people who work on Copilot. Our focus is the knowledge work that is still hard for AI: tasks that span several apps, depend on context built up over weeks, and need to be right the first time.</p>
+          <p>We run controlled experiments, build prototypes, and turn the results into design principles for agents. This site is where we publish that work.</p>
+          <dl class="about-facts">
+            <div><dt>Team</dt><dd>Frontier AI</dd></div>
+            <div><dt>Part of</dt><dd>Microsoft Office</dd></div>
+            <div><dt>Works on</dt><dd>Microsoft Copilot</dd></div>
+          </dl>
         </div>
+      </div>
+      <div class="section-inner areas reveal">
+        <h3 class="areas-title" id="areas-title">What we write about</h3>
+        <div class="area-grid" id="area-grid" role="list" aria-labelledby="areas-title"></div>
       </div>
     </section>
 
-    <section class="team" id="team" aria-labelledby="team-title" hidden>
-      <div class="section-inner">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="section-label">Team</p>
-            <h2 id="team-title">Many disciplines. One mission.</h2>
-          </div>
-          <p>
-            Researchers, engineers, product thinkers, and operators working together from first principles to deployed systems.
-          </p>
+    <section class="story" id="story" aria-labelledby="story-title">
+      <div class="section-inner story-grid">
+        <div class="reveal">
+          <p class="section-label">Our story</p>
+          <h2 class="section-title" id="story-title">We study AI where knowledge work already happens.</h2>
         </div>
-
-        <figure class="team-photo reveal">
-          <img
-            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&amp;fit=crop&amp;w=2200&amp;q=88"
-            alt="A multidisciplinary team collaborating around a table"
-            width="2200"
-            height="1467"
-            loading="lazy"
-          >
-        </figure>
-
-        <div class="team-groups reveal" aria-label="Team disciplines">
-          <article class="team-group">
-            <span class="team-group-number">01</span>
-            <h3>Research</h3>
-            <p>Models, learning, reasoning, multimodality, and evaluation.</p>
-          </article>
-          <article class="team-group">
-            <span class="team-group-number">02</span>
-            <h3>Engineering</h3>
-            <p>Training systems, inference, data, and dependable infrastructure.</p>
-          </article>
-          <article class="team-group">
-            <span class="team-group-number">03</span>
-            <h3>Product</h3>
-            <p>Human-centered experiences that turn capabilities into useful tools.</p>
-          </article>
-          <article class="team-group">
-            <span class="team-group-number">04</span>
-            <h3>Operations</h3>
-            <p>Programs, partnerships, and the systems that help ambitious teams move.</p>
-          </article>
+        <div class="story-copy reveal">
+          <p>Much of the world's knowledge work runs through Office documents, spreadsheets, presentations, and email. Our team sits inside Microsoft Office, close to that work, and we work on Copilot so it can take on more of it.</p>
+          <p>Building agents for real work raised questions that public benchmarks rarely cover: how much an agent should remember about a person or a project, which decisions belong to the model and which belong to deterministic code, and when a smaller, faster model is the better choice. Those questions shape most of our research.</p>
+          <p>We started this blog in 2026 to share that research in the open. Each post is written by someone on the team and covers an experiment, a design principle, or a result we think other builders can use.</p>
         </div>
       </div>
     </section>
 
     <section class="blog" id="blog" aria-labelledby="blog-title">
       <div class="section-inner">
-        <h2 id="blog-title" hidden>Articles</h2>
+        <div class="blog-header reveal">
+          <div>
+            <p class="section-label">Blog</p>
+            <h2 id="blog-title">Latest writing</h2>
+          </div>
+          <p class="blog-intro">Research notes, experiments, and design principles from the Frontier AI team.</p>
+        </div>
+
+        <div class="category-filter reveal" id="category-filter" role="group" aria-label="Filter articles by category"></div>
 
         <div class="article-tools reveal">
           <input
@@ -1196,10 +1281,40 @@
         </div>
 
         <div class="post-list reveal" id="article-list" data-view="grid"></div>
-        <p class="no-results" id="no-results" hidden>No articles match your search.</p>
+        <p class="no-results" id="no-results" hidden>No articles match this search and category.</p>
+      </div>
+    </section>
+
+    <section class="team-cta" aria-labelledby="team-cta-title">
+      <div class="section-inner team-cta-inner reveal">
+        <div>
+          <p class="section-label">Team</p>
+          <h2 class="section-title" id="team-cta-title">The people behind the work.</h2>
+          <p class="team-cta-copy">Researchers, engineers, and product thinkers advancing the science behind Microsoft Copilot.</p>
+          <a class="button" href="team.html">Meet the team</a>
+        </div>
+        <ul class="team-faces" aria-label="Team members">
+          <li><img src="assets/team/mukul-singh.jpg" alt="Mukul Singh" width="76" height="76" loading="lazy"></li>
+          <li><img src="assets/team/devin-devlin.jpg" alt="Devin Devlin" width="76" height="76" loading="lazy"></li>
+          <li><img src="assets/team/jack-williams.jpg" alt="Jack Williams" width="76" height="76" loading="lazy"></li>
+          <li><img src="assets/team/kartik-fnu.jpg" alt="Kartik Fnu" width="76" height="76" loading="lazy"></li>
+          <li><img src="assets/team/kartik-sharma.jpg" alt="Kartik Sharma" width="76" height="76" loading="lazy"></li>
+          <li><img src="assets/team/mansi-uniyal.png" alt="Mansi Uniyal" width="76" height="76" loading="lazy"></li>
+          <li><img src="assets/team/qi-zhang.jpg" alt="Qi Zhang" width="76" height="76" loading="lazy"></li>
+        </ul>
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-title">Frontier AI for Office Science</p>
+        <p class="footer-copy">The Frontier AI team in Microsoft Office. We work on Copilot.</p>
+      </div>
+      <p class="copyright">&copy; 2026 Frontier AI for Office Science</p>
+    </div>
+  </footer>
 
   <script src="articles/catalog.js"></script>
   <script>
@@ -1237,8 +1352,13 @@
     const articleList = document.getElementById("article-list");
     const articleSearch = document.getElementById("article-search");
     const noResults = document.getElementById("no-results");
+    const categoryFilter = document.getElementById("category-filter");
+    const areaGrid = document.getElementById("area-grid");
     const articleCatalog = window.FRONTIER_ARTICLES || [];
+    const categoryCatalog = window.FRONTIER_CATEGORIES || [];
     const viewOptions = [...document.querySelectorAll("[data-view-option]")];
+    const allCategories = "All";
+    const filterState = { category: allCategories, query: "" };
 
     const visualPaths = {
       boundary: '<rect class="visual-surface" x="86" y="42" width="228" height="66" rx="8"></rect><rect class="visual-surface" x="86" y="192" width="228" height="66" rx="8"></rect><path class="visual-line" d="M125 75h150M125 225h150"></path><path class="visual-line-fine" d="M155 108v39M245 108v39M155 153v39M245 153v39"></path><path class="visual-accent-line" d="M58 150h284"></path>',
@@ -1251,24 +1371,104 @@
       handoff: '<circle class="visual-surface" cx="105" cy="150" r="58"></circle><circle class="visual-surface" cx="295" cy="150" r="58"></circle><path class="visual-line" d="M139 126h108l-21-21M261 174H153l21 21"></path><circle cx="105" cy="150" r="13" fill="var(--cp-text)"></circle><rect x="282" y="137" width="26" height="26" fill="var(--cp-text)"></rect>'
     };
 
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[character]);
+
+    const slugify = (value) => value.toLocaleLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const countFor = (categoryName) => articleCatalog.filter((article) => article.category === categoryName).length;
+    const articleLabel = (count) => `${count} ${count === 1 ? "article" : "articles"}`;
+
     const renderArticle = (article, index) => `
       <article class="post">
         <div class="post-visual">
           <svg viewBox="0 0 400 300" role="img" aria-labelledby="article-visual-${index}">
-            <title id="article-visual-${index}">${article.visualLabel}</title>
+            <title id="article-visual-${index}">${escapeHtml(article.visualLabel)}</title>
             <rect class="visual-soft" width="400" height="300"></rect>
             ${visualPaths[article.visual] || visualPaths.boundary}
           </svg>
         </div>
-        <div class="post-meta"><time datetime="${article.date}">${article.displayDate}</time><br>${article.category}</div>
-        <h3><a href="${article.href}">${article.title}</a></h3>
-        <p class="post-summary">${article.summary}</p>
+        <div class="post-meta"><time datetime="${article.date}">${escapeHtml(article.displayDate)}</time><br>${escapeHtml(article.category)}</div>
+        <h3><a href="${article.href}">${escapeHtml(article.title)}</a></h3>
+        <p class="post-summary">${escapeHtml(article.summary)}</p>
         <span class="post-arrow" aria-hidden="true">&#8594;</span>
       </article>`;
 
-    articleList.innerHTML = articleCatalog.map(renderArticle).join("");
-    const articles = [...articleList.querySelectorAll(".post")];
-    noResults.hidden = articles.length !== 0;
+    const matchesQuery = (article) => !filterState.query || [article.title, article.summary, article.category, article.displayDate]
+      .join(" ")
+      .toLocaleLowerCase()
+      .includes(filterState.query);
+
+    const renderArticles = () => {
+      const visibleArticles = articleCatalog.filter((article) =>
+        (filterState.category === allCategories || article.category === filterState.category) && matchesQuery(article));
+      articleList.innerHTML = visibleArticles.map(renderArticle).join("");
+      noResults.hidden = visibleArticles.length !== 0;
+    };
+
+    const renderCategoryFilter = () => {
+      const options = [
+        { name: allCategories, count: articleCatalog.length },
+        ...categoryCatalog.map((category) => ({ name: category.name, count: countFor(category.name) }))
+      ];
+      categoryFilter.innerHTML = options.map((option) => `
+        <button class="category-chip" type="button" data-category="${escapeHtml(option.name)}" aria-pressed="false" aria-label="${escapeHtml(option.name)}, ${articleLabel(option.count)}">
+          <span>${escapeHtml(option.name)}</span><span class="chip-count" aria-hidden="true">${option.count}</span>
+        </button>`).join("");
+    };
+
+    const renderResearchAreas = () => {
+      areaGrid.innerHTML = categoryCatalog.map((category, index) => `
+        <a class="area-card" role="listitem" href="?category=${slugify(category.name)}#blog" data-category="${escapeHtml(category.name)}">
+          <span class="area-number">${String(index + 1).padStart(2, "0")}</span>
+          <h4>${escapeHtml(category.name)}</h4>
+          <p>${escapeHtml(category.description)}</p>
+          <span class="area-link">${articleLabel(countFor(category.name))} <span aria-hidden="true">&#8594;</span></span>
+        </a>`).join("");
+    };
+
+    const setCategory = (categoryName, { updateUrl = true } = {}) => {
+      filterState.category = categoryCatalog.some((category) => category.name === categoryName) ? categoryName : allCategories;
+      categoryFilter.querySelectorAll("[data-category]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.category === filterState.category));
+      });
+      renderArticles();
+
+      if (!updateUrl) return;
+      try {
+        const url = new URL(window.location.href);
+        if (filterState.category === allCategories) {
+          url.searchParams.delete("category");
+        } else {
+          url.searchParams.set("category", slugify(filterState.category));
+        }
+        history.replaceState(null, "", url);
+      } catch {}
+    };
+
+    renderResearchAreas();
+    renderCategoryFilter();
+
+    const requestedCategory = new URLSearchParams(window.location.search).get("category");
+    const initialCategory = categoryCatalog.find((category) => slugify(category.name) === requestedCategory);
+    setCategory(initialCategory ? initialCategory.name : allCategories, { updateUrl: false });
+
+    categoryFilter.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-category]");
+      if (button) setCategory(button.dataset.category);
+    });
+
+    areaGrid.addEventListener("click", (event) => {
+      const card = event.target.closest("[data-category]");
+      if (!card) return;
+      event.preventDefault();
+      setCategory(card.dataset.category);
+      document.getElementById("blog").scrollIntoView();
+    });
 
     viewOptions.forEach((option) => {
       option.addEventListener("click", () => {
@@ -1281,16 +1481,8 @@
     });
 
     articleSearch.addEventListener("input", () => {
-      const query = articleSearch.value.trim().toLocaleLowerCase();
-      let visibleCount = 0;
-
-      articles.forEach((article) => {
-        const matches = article.textContent.toLocaleLowerCase().includes(query);
-        article.hidden = !matches;
-        if (matches) visibleCount += 1;
-      });
-
-      noResults.hidden = visibleCount !== 0;
+      filterState.query = articleSearch.value.trim().toLocaleLowerCase();
+      renderArticles();
     });
 
     const sectionLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
