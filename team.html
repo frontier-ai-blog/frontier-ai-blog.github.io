@@ -241,29 +241,7 @@
     }
 
     .team-hero .section-inner {
-      display: grid;
-      grid-template-columns: minmax(0, 0.65fr) minmax(20rem, 1fr);
-      gap: 0 clamp(3rem, 8vw, 8rem);
-      align-items: end;
-    }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      grid-column: 1 / -1;
-      margin: 0 0 0.75rem;
-      color: var(--cp-text-muted);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 2.5rem;
-      height: 2px;
-      background: var(--cp-text);
+      max-width: 72rem;
     }
 
     h1,
@@ -274,7 +252,7 @@
       margin-top: 0;
     }
 
-    h1 {
+    .team-hero h1 {
       max-width: none;
       margin-bottom: 0;
       font-size: clamp(2.35rem, 3.3vw, 3.25rem);
@@ -282,24 +260,52 @@
       line-height: 0.98;
     }
 
-    .hero-copy {
-      max-width: 42rem;
-      margin-bottom: 0;
-      color: var(--cp-text-muted);
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
+    .team-content {
+      padding-block: clamp(1.5rem, 3vw, 2.5rem);
+      background: var(--cp-surface);
     }
 
-    .team-content {
-      padding-block: clamp(2rem, 4vw, 3.5rem);
-      border-top: 1px solid var(--cp-border);
-      background: var(--cp-surface);
+    .story {
+      max-width: 100ch;
+      margin-top: 1.25rem;
+    }
+
+    .story-label {
+      margin-bottom: 0.5rem;
+      color: var(--cp-text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .story-copy p {
+      margin-bottom: 0.65rem;
+      color: var(--cp-text-muted);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .story-copy p:first-child {
+      color: var(--cp-text);
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    .story-copy p:last-child {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    .story-copy strong {
+      color: var(--cp-text);
+      font-weight: 600;
     }
 
     .team-roster {
       width: min(100%, 72rem);
       display: grid;
       grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 3rem);
+      gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 3rem);
       align-items: start;
       margin-inline: auto;
     }
@@ -492,17 +498,6 @@
         grid-column: span 1;
       }
 
-      .team-hero .section-inner {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .team-hero .eyebrow,
-      .team-hero h1,
-      .team-hero .hero-copy {
-        grid-column: 1;
-      }
-
       .member-photo {
         width: min(100%, 8rem);
       }
@@ -578,11 +573,14 @@
   <main id="main">
     <section class="team-hero" aria-labelledby="team-title">
       <div class="section-inner">
-        <p class="eyebrow">Team</p>
         <h1 id="team-title">Meet the team.</h1>
-        <p class="hero-copy">
-          Researchers, engineers, product thinkers, and operators advancing the science behind Microsoft Copilot, from first principles to deployed systems.
-        </p>
+        <div class="story" id="story" aria-labelledby="story-title">
+          <h2 class="story-label" id="story-title">Our story</h2>
+          <div class="story-copy">
+            <p>Building agents for real work raised questions that public benchmarks rarely cover. Our research spans <strong>model routing and COGS optimization</strong>, <strong>agent memory</strong>, and <strong>fine-tuning</strong>—grounded in realistic knowledge-work benchmarks that measure quality, reliability, and efficiency.</p>
+            <p><em>We started this blog in 2026 to share that research in the open. Each post is written by someone on the team and covers an experiment, a design principle, or a result we think other builders can use.</em></p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -669,6 +667,7 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <script>

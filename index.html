@@ -336,7 +336,6 @@
     }
 
     .about,
-    .story,
     .team-cta {
       padding-block: clamp(3.5rem, 7vw, 6.5rem);
       border-bottom: 1px solid var(--cp-border);
@@ -346,16 +345,11 @@
       background: var(--cp-bg-elevated);
     }
 
-    .story {
-      background: var(--cp-surface);
-    }
-
     .team-cta {
       background: var(--cp-bg);
     }
 
-    .about-grid,
-    .story-grid {
+    .about-grid {
       display: grid;
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
       gap: clamp(2rem, 7vw, 7rem);
@@ -380,19 +374,12 @@
       letter-spacing: 0;
     }
 
-    .about-copy p,
-    .story-copy p {
+    .about-copy p {
       max-width: 40rem;
       margin-bottom: 1.1rem;
       color: var(--cp-text-muted);
       font-size: clamp(1rem, 1.3vw, 1.1rem);
       line-height: 1.65;
-    }
-
-    .story-copy p:first-child {
-      color: var(--cp-text);
-      font-size: clamp(1.1rem, 1.7vw, 1.3rem);
-      line-height: 1.5;
     }
 
     .about-facts {
@@ -1012,7 +999,6 @@
       }
 
       .about-grid,
-      .story-grid,
       .team-cta-inner {
         grid-template-columns: 1fr;
         gap: 1.75rem;
@@ -1204,20 +1190,6 @@
       <div class="section-inner areas reveal">
         <h3 class="areas-title" id="areas-title">What we write about</h3>
         <div class="area-grid" id="area-grid" role="group" aria-labelledby="areas-title"></div>
-      </div>
-    </section>
-
-    <section class="story" id="story" aria-labelledby="story-title">
-      <div class="section-inner story-grid">
-        <div class="reveal">
-          <p class="section-label">Our story</p>
-          <h2 class="section-title" id="story-title">We study AI where knowledge work already happens.</h2>
-        </div>
-        <div class="story-copy reveal">
-          <p>A task can start with an email, depend on a spreadsheet, and end in a presentation. Agents need to carry the right context between those steps without losing track of decisions or sources.</p>
-          <p>Building agents for real work raised questions that public benchmarks rarely cover: how much an agent should remember about a person or a project, which decisions belong to the model and which belong to deterministic code, and when a smaller, faster model is the better choice. Those questions shape most of our research.</p>
-          <p>We started this blog in 2026 to share that research in the open. Each post is written by someone on the team and covers an experiment, a design principle, or a result we think other builders can use.</p>
-        </div>
       </div>
     </section>
 
