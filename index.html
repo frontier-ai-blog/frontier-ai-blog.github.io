@@ -256,11 +256,13 @@
       width: min(100% - 2.5rem, 84rem);
       margin-inline: auto;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(19rem, 0.7fr);
-      gap: 0 clamp(3rem, 8vw, 8rem);
-      align-items: end;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+      justify-items: center;
       padding-block: clamp(2rem, 3.5vw, 3rem);
       color: var(--cp-text);
+      text-align: center;
     }
 
     .eyebrow {
@@ -268,19 +270,12 @@
       align-items: center;
       gap: 0.75rem;
       grid-column: 1 / -1;
-      margin: 0 0 1rem;
+      margin: 0;
       color: var(--cp-text-muted);
       font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0;
       text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 2.5rem;
-      height: 2px;
-      background: var(--cp-text);
     }
 
     h1,
@@ -292,8 +287,7 @@
 
     h1 {
       grid-column: 1;
-      grid-row: 2 / span 2;
-      max-width: 18ch;
+      max-width: 26ch;
       margin-bottom: 0;
       font-size: clamp(2.5rem, 4.6vw, 4.25rem);
       font-weight: 600;
@@ -301,19 +295,11 @@
       letter-spacing: 0;
     }
 
-    .hero-copy {
-      grid-column: 2;
-      max-width: 43rem;
-      margin-bottom: 1.25rem;
-      color: var(--cp-text-muted);
-      font-size: clamp(1rem, 1.5vw, 1.15rem);
-      line-height: 1.5;
-    }
-
     .hero-links {
-      grid-column: 2;
+      grid-column: 1;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 0.8rem;
     }
 
@@ -1025,15 +1011,6 @@
         font-size: clamp(2.5rem, 12vw, 3.75rem);
       }
 
-      .hero-copy,
-      .hero-links {
-        grid-column: 1;
-      }
-
-      .hero-copy {
-        margin: 0.25rem 0 0;
-      }
-
       .about-grid,
       .story-grid,
       .team-cta-inner {
@@ -1199,11 +1176,8 @@
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-content reveal">
-        <p class="eyebrow">Frontier AI &middot; Microsoft Office</p>
+        <p class="eyebrow">Applied research &middot; Microsoft Office</p>
         <h1 id="hero-title">Advancing the science behind Microsoft Copilot.</h1>
-        <p class="hero-copy">
-          We are the Frontier AI team inside Microsoft Office, and we work on Copilot. We study how AI agents can take on real knowledge work in documents, spreadsheets, presentations, and email, and we publish what we learn here.
-        </p>
         <div class="hero-links">
           <a class="button" href="#blog">Read the blog</a>
           <a class="button button-secondary" href="team.html">About the team</a>
@@ -1218,7 +1192,7 @@
           <h2 class="section-title" id="about-title">A research and engineering team inside Microsoft Office.</h2>
         </div>
         <div class="about-copy reveal">
-          <p>Frontier AI is part of Microsoft Office. We are researchers, engineers, and product people who work on Copilot. Our focus is the knowledge work that is still hard for AI: tasks that span several apps, depend on context built up over weeks, and need to be right the first time.</p>
+          <p>We are researchers, engineers, and product people working on Copilot. Our focus is the knowledge work that is still hard for AI: tasks that span several apps, depend on context built up over weeks, and need to be right the first time.</p>
           <p>We run controlled experiments, build prototypes, and turn the results into design principles for agents. This site is where we publish that work.</p>
           <dl class="about-facts">
             <div><dt>Team</dt><dd>Frontier AI</dd></div>
@@ -1240,7 +1214,7 @@
           <h2 class="section-title" id="story-title">We study AI where knowledge work already happens.</h2>
         </div>
         <div class="story-copy reveal">
-          <p>Much of the world's knowledge work runs through Office documents, spreadsheets, presentations, and email. Our team sits inside Microsoft Office, close to that work, and we work on Copilot so it can take on more of it.</p>
+          <p>A task can start with an email, depend on a spreadsheet, and end in a presentation. Agents need to carry the right context between those steps without losing track of decisions or sources.</p>
           <p>Building agents for real work raised questions that public benchmarks rarely cover: how much an agent should remember about a person or a project, which decisions belong to the model and which belong to deterministic code, and when a smaller, faster model is the better choice. Those questions shape most of our research.</p>
           <p>We started this blog in 2026 to share that research in the open. Each post is written by someone on the team and covers an experiment, a design principle, or a result we think other builders can use.</p>
         </div>
@@ -1254,7 +1228,7 @@
             <p class="section-label">Blog</p>
             <h2 id="blog-title">Latest writing</h2>
           </div>
-          <p class="blog-intro">Research notes, experiments, and design principles from the Frontier AI team.</p>
+          <p class="blog-intro">Research notes, experiments, and design principles for agents doing knowledge work.</p>
         </div>
 
         <div class="category-filter reveal" id="category-filter" role="group" aria-label="Filter articles by category"></div>
@@ -1310,7 +1284,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-title">Frontier AI for Office Science</p>
-        <p class="footer-copy">The Frontier AI team in Microsoft Office. We work on Copilot.</p>
+        <p class="footer-copy">Research and engineering behind Microsoft Copilot.</p>
       </div>
       <p class="copyright">&copy; 2026 Frontier AI for Office Science</p>
     </div>
