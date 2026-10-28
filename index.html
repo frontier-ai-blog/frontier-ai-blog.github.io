@@ -1206,7 +1206,7 @@
         </p>
         <div class="hero-links">
           <a class="button" href="#blog">Read the blog</a>
-          <a class="button button-secondary" href="#about">About the team</a>
+          <a class="button button-secondary" href="team.html">About the team</a>
         </div>
       </div>
     </section>
@@ -1229,7 +1229,7 @@
       </div>
       <div class="section-inner areas reveal">
         <h3 class="areas-title" id="areas-title">What we write about</h3>
-        <div class="area-grid" id="area-grid" role="list" aria-labelledby="areas-title"></div>
+        <div class="area-grid" id="area-grid" role="group" aria-labelledby="areas-title"></div>
       </div>
     </section>
 
@@ -1380,7 +1380,8 @@
     })[character]);
 
     const slugify = (value) => value.toLocaleLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    const countFor = (categoryName) => articleCatalog.filter((article) => article.category === categoryName).length;
+    const categoriesFor = (article) => [article.category, ...(article.additionalCategories || [])];
+    const countFor = (categoryName) => articleCatalog.filter((article) => categoriesFor(article).includes(categoryName)).length;
     const articleLabel = (count) => `${count} ${count === 1 ? "article" : "articles"}`;
 
     const renderArticle = (article, index) => `
@@ -1392,20 +1393,20 @@
             ${visualPaths[article.visual] || visualPaths.boundary}
           </svg>
         </div>
-        <div class="post-meta"><time datetime="${article.date}">${escapeHtml(article.displayDate)}</time><br>${escapeHtml(article.category)}</div>
+        <div class="post-meta"><time datetime="${article.date}">${escapeHtml(article.displayDate)}</time><br>${categoriesFor(article).map(escapeHtml).join(" &middot; ")}</div>
         <h3><a href="${article.href}">${escapeHtml(article.title)}</a></h3>
         <p class="post-summary">${escapeHtml(article.summary)}</p>
         <span class="post-arrow" aria-hidden="true">&#8594;</span>
       </article>`;
 
-    const matchesQuery = (article) => !filterState.query || [article.title, article.summary, article.category, article.displayDate]
+    const matchesQuery = (article) => !filterState.query || [article.title, article.summary, ...categoriesFor(article), article.displayDate]
       .join(" ")
       .toLocaleLowerCase()
       .includes(filterState.query);
 
     const renderArticles = () => {
       const visibleArticles = articleCatalog.filter((article) =>
-        (filterState.category === allCategories || article.category === filterState.category) && matchesQuery(article));
+        (filterState.category === allCategories || categoriesFor(article).includes(filterState.category)) && matchesQuery(article));
       articleList.innerHTML = visibleArticles.map(renderArticle).join("");
       noResults.hidden = visibleArticles.length !== 0;
     };
@@ -1423,7 +1424,7 @@
 
     const renderResearchAreas = () => {
       areaGrid.innerHTML = categoryCatalog.map((category, index) => `
-        <a class="area-card" role="listitem" href="?category=${slugify(category.name)}#blog" data-category="${escapeHtml(category.name)}">
+        <a class="area-card" href="?category=${slugify(category.name)}#blog" data-category="${escapeHtml(category.name)}">
           <span class="area-number">${String(index + 1).padStart(2, "0")}</span>
           <h4>${escapeHtml(category.name)}</h4>
           <p>${escapeHtml(category.description)}</p>
@@ -1431,7 +1432,7 @@
         </a>`).join("");
     };
 
-    const setCategory = (categoryName, { updateUrl = true } = {}) => {
+    const setCategory = (categoryName, { updateUrl = true, hash } = {}) => {
       filterState.category = categoryCatalog.some((category) => category.name === categoryName) ? categoryName : allCategories;
       categoryFilter.querySelectorAll("[data-category]").forEach((button) => {
         button.setAttribute("aria-pressed", String(button.dataset.category === filterState.category));
@@ -1446,6 +1447,7 @@
         } else {
           url.searchParams.set("category", slugify(filterState.category));
         }
+        if (hash) url.hash = hash;
         history.replaceState(null, "", url);
       } catch {}
     };
@@ -1463,10 +1465,11 @@
     });
 
     areaGrid.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       const card = event.target.closest("[data-category]");
       if (!card) return;
       event.preventDefault();
-      setCategory(card.dataset.category);
+      setCategory(card.dataset.category, { hash: "#blog" });
       document.getElementById("blog").scrollIntoView();
     });
 

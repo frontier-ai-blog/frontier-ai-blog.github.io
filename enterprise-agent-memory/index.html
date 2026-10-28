@@ -1003,6 +1003,76 @@
     margin-bottom: 0;
   }
 
+  .scenario {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rule);
+    background: var(--cp-surface-soft);
+  }
+
+  .scenario .card-label {
+    margin-bottom: 0.35rem;
+  }
+
+  .scenario-inputs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .scenario-inputs li,
+  .scenario-result {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.65rem;
+    min-width: 0;
+    padding: 0.45rem 0;
+  }
+
+  .scenario-inputs li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .scenario-app,
+  .scenario-result b {
+    margin: 0;
+    color: var(--cold-deep);
+    font: 700 0.75rem/1.3 "Segoe UI", Aptos, Calibri, sans-serif;
+  }
+
+  .scenario .scenario-inputs p,
+  .scenario .scenario-result p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .scenario-result {
+    padding-bottom: 0;
+  }
+
+  .memory-article .scenario figcaption {
+    margin: 0.65rem 0 0;
+    padding-top: 0.6rem;
+    font-family: inherit;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .scenario figcaption strong {
+    color: var(--ink);
+  }
+
+  .memory-article .dream .sig {
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .memory-article .dream .diff div {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
   .memory-article .pull {
     padding: 1.25rem 1.4rem;
     border-left-width: 0.35rem;
@@ -1679,7 +1749,7 @@
     <div class="hero-badge">Memory and Context</div>
     <h1>Designing Memory for Enterprise Agents</h1>
     <p class="subtitle">What it takes to build simple, effective memory for enterprise agent harnesses.</p>
-    <p class="byline"><strong>Kartik Fnu</strong> &middot; Applied Scientist II &middot; <time datetime="2026-10-20">October 20, 2026</time></p>
+    <p class="byline"><strong>Kartik Fnu</strong> &middot; Applied Scientist 2 &middot; <time datetime="2026-10-20">October 20, 2026</time></p>
   </div>
 </header>
 
@@ -1770,26 +1840,39 @@
 </figure>
 
 <div class="lede">
-<p>Persistent notes, structured records, vector search and temporal knowledge graphs all help agents store and recall context from past interactions. In a large enterprise, much of the preference and context worth learning comes both from interactions with agents across applications and from the work people do in those applications: revising documents, discussing decisions in chat, confirming changes by email and handing tasks to colleagues. As that work moves across applications, memory agents need to connect these observations into an understanding of people&rsquo;s preferences, ongoing projects and recurring workflows. That memory should help whichever agent handles the next conversation follow a preference without another reminder, find the right project material, or drop an assumption that no longer holds. This article explores how to build and maintain that shared understanding without retaining every interaction, and how to tell whether it actually makes the next task easier.</p>
+<p>Persistent notes, structured records, vector search and temporal knowledge graphs provide mechanisms for agent memory. The design question is what context to preserve, where it should apply and when it should stop influencing the agent. In an enterprise, that context comes from both conversations with agents and everyday work across applications: revising documents, discussing decisions, confirming changes and handing tasks to colleagues. Memory needs to connect these observations into an understanding of preferences, ongoing projects and recurring workflows that other agents can use without asking the user to start over. This article explores how to maintain that understanding without retaining every interaction, and how to measure whether it improves subsequent work.</p>
 
-<div class="card">
-  <div class="card-label"><span>one week &middot; four applications</span><span>Atlas review</span></div>
-  <p><b>PowerPoint.</b> While preparing an Atlas executive review, Maya asks the agent to put decisions before supporting detail.</p>
-  <p><b>Teams.</b> The project group says the Atlas forecast must stay marked preliminary until Finance closes the books.</p>
-  <p><b>Outlook.</b> Later that week, Priya confirms that Finance has closed the books and the forecast is final.</p>
-  <p><b>The following week &middot; Word.</b> Maya asks for the next Atlas review. The agent leads with decisions, uses search to find the finalized forecast, and leaves off the preliminary label. Maya does not have to repeat her preference or explain what changed.</p>
-</div>
+<figure class="scenario" aria-labelledby="scenario-caption">
+  <div class="card-label" id="scenario-caption">Illustrative example &middot; Q3 review</div>
+  <ol class="scenario-inputs">
+    <li>
+      <span class="scenario-app">PowerPoint</span>
+      <p>Author: decisions first for quarterly reviews.</p>
+    </li>
+    <li>
+      <span class="scenario-app">Teams</span>
+      <p>Finance: Q3 forecast stays preliminary until close.</p>
+    </li>
+    <li>
+      <span class="scenario-app">Outlook</span>
+      <p>Finance: books closed; final forecast approved.</p>
+    </li>
+  </ol>
+  <div class="scenario-result">
+    <b>Next: Word</b>
+    <p>Decisions first. Use the approved forecast, without the preliminary label.</p>
+  </div>
+  <figcaption>Keep &ldquo;decisions first&rdquo; <strong>scoped to quarterly reviews</strong>. Retire the Q3 preliminary-label rule <strong>when Finance confirms closure</strong>. Store each rule with its scope and a link to the supporting source, not another copy of the presentation, chat or email.</figcaption>
+</figure>
 
-<p>The useful memory in this example is small. It carries Maya&rsquo;s preference into the next review, keeps the forecast restriction tied to Atlas, and retires that restriction when Finance&rsquo;s confirmation arrives. It does not need another copy of the deck, chat or email, only enough context to guide the next task and a link back to the evidence when the agent needs to check.</p>
-
-<p>That distinction shapes the design: combine observations across applications, preserve their source and scope, recognize when context no longer applies, and track which conclusions depend on which evidence.</p>
+<p>That distinction shapes the design: combine observations across applications while preserving their sources and scope. Recognize when context no longer applies, and track which conclusions depend on which evidence so changes can propagate.</p>
 
 <figure aria-labelledby="fig1-cap">
     <div class="chal">
-      <div class="ch"><span class="n">obligation 01</span><b>Combine partial observations</b><span class="d">The document agent, spreadsheet agent and chat assistant each see one fragment of Maya&rsquo;s day. No observation is enough on its own; <i>the meaning appears only across them</i>.</span></div>
-      <div class="ch"><span class="n">obligation 02</span><b>Preserve evidence boundaries</b><span class="d">A fiscal-column convention belongs in spreadsheets. A fact about Priya came from permissioned sources. Compress either into a general profile and it travels farther than its evidence permits.</span></div>
-      <div class="ch"><span class="n">obligation 03</span><b>Represent when context ends</b><span class="d">&ldquo;Strike the indemnity cap&rdquo; was correct until the contract was signed. The instruction <i>ended</i> at a knowable event that a decay curve cannot express.</span></div>
-      <div class="ch"><span class="n">obligation 04</span><b>Keep compression reversible</b><span class="d">Three observations become one preference, then support another conclusion. If the source disappears, the system still has to know <i>what depended on it</i>.</span></div>
+      <div class="ch"><span class="n">obligation 01</span><b>Combine partial observations</b><span class="d">Carry the presentation preference into Word. Use Finance&rsquo;s email to retire the chat restriction.</span></div>
+      <div class="ch"><span class="n">obligation 02</span><b>Preserve evidence boundaries</b><span class="d">The preference applies to quarterly reviews. The forecast remains subject to source permissions.</span></div>
+      <div class="ch"><span class="n">obligation 03</span><b>Represent when context ends</b><span class="d">The preliminary-label rule ends when Finance closes the books, not when a decay score drops.</span></div>
+      <div class="ch"><span class="n">obligation 04</span><b>Track dependencies</b><span class="d">Keep each rule linked to its evidence. Recheck dependent memories if that evidence changes.</span></div>
     </div>
     <figcaption id="fig1-cap"><b>Figure 2. Four obligations that shape the memory contract</b></figcaption>
   </figure>
@@ -1887,7 +1970,7 @@
         <span class="triad-kicker">the work</span>
         <b>Organizational</b>
         <p>What is true about projects, tasks, people, artifacts, decisions, dependencies and changing business state.</p>
-        <span class="triad-example"><em>Examples</em> Finance owns the forecast; Atlas is winding down; this document requires two approvals.</span>
+        <span class="triad-example"><em>Examples</em> Finance owns the Q3 forecast; the forecast is approved; this document requires two approvals.</span>
       </div>
       <div class="memory-type pref">
         <span class="triad-kicker">the result</span>
@@ -1924,7 +2007,7 @@
 <section id="schema">
   <div class="sec-head"><a class="addr-link" href="#schema"><span class="addr mono">03</span></a><h2>Every memory type needs a schema</h2></div>
 
-  <p>A learned preference needs more than a sentence. Maya&rsquo;s repeated edits may suggest that she prefers rounded figures in executive presentations but not in audit workbooks. If the agent learns something from a confidential document, that memory must not surface in contexts that lack access to the source; a temporary memory may also need to expire after a few days. <strong>A schema makes these boundaries explicit and links each inference to its supporting evidence</strong>, so the system knows where it can be used, when to retire it and what to reconsider if its source changes.</p>
+  <p>&ldquo;Decisions first&rdquo; applies to quarterly reviews, not every document. The preliminary-label rule ends when Finance closes the books. Neither rule grants access to the forecast. <strong>A schema records these boundaries and links each rule to its evidence.</strong></p>
 
   <p>The schema answers three groups of questions:</p>
   <ul>
@@ -2057,76 +2140,40 @@
     <div class="dream">
 
       <div class="dream-band band-day">
-        <div class="band-head"><span>Wednesday &middot; raw episodic trace</span><span class="t">~340 signals</span></div>
+        <div class="band-head"><span>New evidence</span><span class="t">illustrative, not measured</span></div>
         <div class="trace">
-          <span class="sig echo"><b>09:14</b> deck &middot; moved decisions to slide 1</span>
-          <span class="sig"><b>10:02</b> mail &middot; deck fwd &rarr; Priya, Sam</span>
-          <span class="sig echo"><b>11:15</b> chat &middot; "lead the review with decisions"</span>
-          <span class="sig"><b>11:47</b> cal &middot; declined Atlas standup</span>
-          <span class="sig echo"><b>13:22</b> docs &middot; accepted decision-first summary</span>
-          <span class="sig"><b>14:10</b> mail &middot; "Atlas is paused for now"</span>
-          <span class="sig"><b>14:38</b> docs &middot; rejected full-rewrite proposal</span>
-          <span class="sig"><b>15:50</b> sheet &middot; Priya added margin beside revenue</span>
-          <span class="sig"><b>16:30</b> docs &middot; acme contract signed</span>
-          <span class="sig">+331 more</span>
+          <span class="sig echo"><b>PowerPoint</b> &middot; &ldquo;For quarterly reviews, put decisions first.&rdquo;</span>
+          <span class="sig"><b>Outlook &middot; Finance</b> &middot; &ldquo;Q3 books are closed. The final forecast is approved.&rdquo;</span>
         </div>
       </div>
 
       <div class="dream-band band-night">
-        <div class="band-head"><span class="lead">&#9650; night pass</span><span class="t">no user waiting &middot; judgment over speed</span></div>
+        <div class="band-head"><span class="lead">Consolidate</span><span class="t">check scope and existing records</span></div>
         <div class="ops">
 
           <div class="op">
-            <span class="op-name">prefilter</span>
-            <span class="op-body"><span class="was">340 signals</span><span class="arrow">&rarr;</span><span class="now">~40 candidates</span> <span class="note">deterministic: dedup, threshold, drop no-ops (before any model runs)</span></span>
-          </div>
-
-          <div class="op">
-            <span class="op-name">merge + reinforce</span>
-            <span class="op-body"><span class="was">3 decision-first edits</span><span class="arrow">&rarr;</span><span class="now">1 record, seen 3&times;</span> <span class="note">one preference, not three actions</span></span>
-          </div>
-
-          <div class="op">
-            <span class="op-name">promote</span>
-            <span class="op-body"><span class="was">scope: artifact</span><span class="arrow">&rarr;</span><span class="now">task:quarterly-review</span> <span class="note">3 review surfaces, not user-wide</span></span>
-          </div>
-
-          <div class="op">
-            <span class="op-name">supersede</span>
-            <span class="op-body"><span class="was">atlas.status = active</span><span class="arrow">&rarr;</span><span class="now">winding_down</span> <span class="keep">&middot; prior value invalidated, retained in log</span></span>
-          </div>
-
-          <div class="op">
-            <span class="op-name">strengthen</span>
-            <span class="op-body"><span class="was">workflow &middot; "propose full rewrite"</span><span class="arrow">&rarr;</span><span class="now">confidence 0.31</span> <span class="note">rejected 3rd time; show a diff first</span></span>
+            <span class="op-name">retain</span>
+            <span class="op-body"><span class="now">Decisions first</span> <span class="note">&middot; explicitly stated &middot; quarterly reviews only</span></span>
           </div>
 
           <div class="op">
             <span class="op-name">expire</span>
-            <span class="op-body"><span class="gone">"strike indemnity cap refs"</span> <span class="note">valid.until = contract_signed (fired 16:30)</span></span>
-          </div>
-
-          <div class="op">
-            <span class="op-name">discard</span>
-            <span class="op-body"><span class="was">300 signals</span><span class="arrow">&rarr;</span><span class="gone">&empty;</span> <span class="note">trace is input, not memory</span></span>
+            <span class="op-body"><span class="gone">Keep the Q3 forecast preliminary</span> <span class="note">&middot; existing Teams rule &middot; Finance confirmed closure</span></span>
           </div>
 
         </div>
       </div>
 
       <div class="dream-band band-morning">
-        <div class="band-head"><span>Thursday 08:00 &middot; what the agent wakes up with</span><span class="t">5 writes</span></div>
+        <div class="band-head"><span>Next task</span><span class="t">two memory changes</span></div>
         <div class="diff">
-          <div><span class="chg">~</span> <span class="path">projects.md</span> <span class="why">atlas: active &rarr; winding_down (history intact)</span></div>
-          <div><span class="chg">~</span> <span class="path">people.md</span> <span class="why">priya: reviewer &rarr; margin reviewer</span></div>
-          <div><span class="add">+</span> <span class="path">reviews/prefs.md</span> <span class="why">lead with decisions &middot; seen 3&times; &middot; scope quarterly-review</span></div>
-          <div><span class="chg">~</span> <span class="path">docs/workflows.md</span> <span class="why">full-rewrite path weakened &rarr; diff-first</span></div>
-          <div><span class="del">&minus;</span> <span class="path">docs/artifacts/acme.md</span> <span class="why">indemnity instruction expired at signature</span></div>
+          <div><span class="add">+</span> <span class="path">Review preference</span> <span class="why">&middot; decisions first &middot; source: PowerPoint instruction</span></div>
+          <div><span class="del">&minus;</span> <span class="path">Forecast restriction</span> <span class="why">&middot; retired &middot; evidence: Finance email</span></div>
         </div>
       </div>
 
     </div>
-    <figcaption id="fig6-cap"><b>Figure 7. One night, 340 signals in, five writes out</b></figcaption>
+    <figcaption id="fig6-cap"><b>Figure 7. Save the preference; retire the restriction</b>The forecast stays in its source system. Memory does not need another copy.</figcaption>
   </figure>
 
   <h3>Filter before inference</h3>
@@ -2140,19 +2187,19 @@
   <p class="tnum"><b>Table 3.</b> The operations of a consolidation pass</p>
   <div class="table-wrap">
   <table>
-    <thead><tr><th>Operation</th><th>What it does</th><th>From Wednesday</th></tr></thead>
+    <thead><tr><th>Operation</th><th>What it does</th><th>Example</th></tr></thead>
     <tbody>
-      <tr><td class="field">prefilter</td><td>Deterministically drop duplicates, no-ops and anything below threshold, before inference</td><td>340 raw signals reduced to ~40 candidates</td></tr>
+      <tr><td class="field">prefilter</td><td>Deterministically drop duplicates, no-ops and anything below threshold, before inference</td><td>Drop a duplicate notification of the same Finance email</td></tr>
       <tr><td class="field">merge</td><td>Collapse repeated observations of the same thing into one record</td><td>Three decision-first edits become one review preference</td></tr>
       <tr><td class="field">reinforce</td><td>Increment <code>evidence</code> on a record that already exists</td><td><code>seen</code> 1 &rarr; 3</td></tr>
       <tr><td class="field">promote</td><td>Widen <code>scope</code> when evidence spans contexts; <code>team</code> requires <code>stated</code></td><td><code>artifact</code> &rarr; <code>task:quarterly-review</code>, not user-wide</td></tr>
-      <tr><td class="field">supersede</td><td>Replace a value and retain the prior one in the append-only log</td><td>Atlas <code>active</code> &rarr; <code>winding_down</code></td></tr>
+      <tr><td class="field">supersede</td><td>Replace a value and retain the prior one in the append-only log</td><td>An explicit project update changes <code>active</code> to <code>paused</code></td></tr>
       <tr><td class="field">resolve</td><td>Settle contradictions: <code>stated</code> outranks <code>inferred</code>, then recency, then evidence</td><td>One instruction beats twelve accepted subject lines</td></tr>
-      <tr><td class="field">strengthen<br>weaken</td><td>Move workflow <code>confidence</code> as later trajectories confirm, contradict or expose friction in a path</td><td>Full-rewrite path weakened to 0.31 after a third rejection</td></tr>
-      <tr><td class="field">decay</td><td>Reduce the standing of preferences no longer being observed, leaving them dormant rather than deleted</td><td>"Dense tables," unsupported for eleven days &rarr; 0.34</td></tr>
-      <tr><td class="field">expire</td><td>Retire facts whose <code>valid</code> window has closed at a known event</td><td>The indemnity instruction fires at signature</td></tr>
+      <tr><td class="field">strengthen<br>weaken</td><td>Move workflow <code>confidence</code> as later trajectories confirm, contradict or expose friction in a path</td><td>Repeated rejections weaken a full-rewrite workflow</td></tr>
+      <tr><td class="field">decay</td><td>Reduce the standing of preferences no longer being observed, leaving them dormant rather than deleted</td><td>An inferred formatting preference becomes dormant without fresh evidence</td></tr>
+      <tr><td class="field">expire</td><td>Retire facts whose <code>valid</code> window has closed at a known event</td><td>The preliminary-label rule ends when Finance closes the books</td></tr>
       <tr><td class="field">propagate</td><td>Follow <code>derived_from</code> and <code>source</code> when something is revoked or purged</td><td>A purged document decrements evidence; a preference below threshold demotes rather than vanishing</td></tr>
-      <tr><td class="field">discard</td><td>Drop trace that produced nothing durable</td><td>300 signals to nothing</td></tr>
+      <tr><td class="field">discard</td><td>Drop trace that produced nothing durable</td><td>Discard an email-forward event that adds no lasting context</td></tr>
     </tbody>
   </table>
   </div>
@@ -2247,33 +2294,31 @@
 
   <p><strong>Search knows what the organization has.</strong> <span class="hl-c">Memory knows which part of it the user probably means.</span></p>
 
-  <p>When a request is underspecified, <em>memory shapes the query rather than answering it.</em> Enterprise search already uses permissions, recency, organizational context and user activity to rank results. Memory adds the working context learned across sessions: the active project, current collaborators, open artifacts and alternatives that are no longer relevant. It turns &ldquo;the review&rdquo; into <strong>&ldquo;the FY26Q3 QBR with Priya and Sam&rdquo;</strong>, a narrower question for an already capable search system.</p>
+  <p>When a request is underspecified, <em>memory shapes the query rather than answering it.</em> Enterprise search already uses permissions, recency, organizational context and user activity to rank results. Memory adds context learned across sessions. In this example, &ldquo;the forecast&rdquo; means <strong>the approved Q3 forecast from Finance</strong>. Search still retrieves and verifies the source.</p>
 
 <figure aria-labelledby="fig8-cap">
     <div class="lanes">
 
       <div class="lane lane-a">
-        <div class="lane-head"><span>Search first</span><span class="cost">4 hops</span></div>
+        <div class="lane-head"><span>Without remembered context</span></div>
         <div class="lane-body">
-          <div class="hop"><span class="n">1</span><span class="txt"><span class="q">search "review"</span><span class="r">1,340 hits across six years</span></span></div>
-          <div class="hop"><span class="n">2</span><span class="txt"><span class="q">search "review" owner:maya</span><span class="r">still 40. Which quarter?</span></span></div>
-          <div class="hop"><span class="n">3</span><span class="txt"><span class="q">search + modified:30d</span><span class="r">11: two are Atlas, which is paused</span></span></div>
-          <div class="hop"><span class="n">4</span><span class="txt"><span class="q">ask the user which one</span><span class="r">the turn is now a clarifying question</span></span></div>
+          <div class="hop"><span class="n">1</span><span class="txt"><span class="q">Search &ldquo;forecast&rdquo;</span><span class="r">Different quarters. Draft and final versions.</span></span></div>
+          <div class="hop"><span class="n">2</span><span class="txt"><span class="q">Ask which quarter and version</span><span class="r">The user repeats context already given.</span></span></div>
         </div>
-        <div class="lane-out">&#8627; answers late, or answers about the wrong quarter</div>
+        <div class="lane-out">The agent must first recover the missing context.</div>
       </div>
 
       <div class="lane lane-b">
-        <div class="lane-head"><span>Memory first</span><span class="cost">1 hop</span></div>
+        <div class="lane-head"><span>With remembered context</span></div>
         <div class="lane-body">
-          <div class="hop mem"><span class="n">0</span><span class="txt"><span class="q">read memory/root.md</span><span class="r">which: QBR, Thursday &middot; whose: Priya, Sam &middot; when: FY26Q3 &middot; not: Atlas, winding down &middot; open: q3-forecast.xlsx</span></span></div>
-          <div class="hop"><span class="n">1</span><span class="txt"><span class="q">search "FY26Q3 QBR" owner:maya with:priya,sam modified:14d</span><span class="r">3 hits, one obviously right</span></span></div>
+          <div class="hop mem"><span class="n">1</span><span class="txt"><span class="q">Load Q3 review context</span><span class="r">Q3 forecast. Finance confirmed approval.</span></span></div>
+          <div class="hop"><span class="n">2</span><span class="txt"><span class="q">Retrieve and verify that forecast</span><span class="r">Check approval and current source permissions.</span></span></div>
         </div>
-        <div class="lane-out">&#8627; memory supplied who / which / when &middot; search supplied what</div>
+        <div class="lane-out">Memory supplies the pointer. The source supplies the answer.</div>
       </div>
 
     </div>
-    <figcaption id="fig8-cap"><b>Figure 9. The same underspecified question, twice</b></figcaption>
+    <figcaption id="fig8-cap"><b>Figure 9. &ldquo;Use the forecast&rdquo; with and without context</b>Illustrative paths, not measured search results.</figcaption>
   </figure>
 
   <p>What memory supplies is a set of <strong>filters, not content</strong>: the entity set to disambiguate against, the vocabulary the organisation actually uses, the recency window that matters, the collaborators worth restricting to, the artifacts already open. Each is a precision gain on a problem that is otherwise recall-bound, and each hop saved is a second of latency and a few thousand tokens of search payload that never enter the window.</p>
